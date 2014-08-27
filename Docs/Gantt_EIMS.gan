@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="EIMS" company="eHealthCare Corp." webLink="" view-date="2011-05-01" view-index="0" gantt-divider-location="429" resource-divider-location="321" version="2.0">
+    <description><![CDATA[Empresa dedicada al desarrollo de soluciones innovadoras en el area de la salud.]]></description>
+    <view zooming-state="default:7" id="gantt-chart"/>
+    <view id="resource-table">
+        <field id="0" name="Name" width="100" order="0"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <calendar id="1" name="default">
+                <default-week sun="0" mon="0" tue="0" wed="0" thu="0" fri="0" sat="0"/>
+                <only-show-weekends value="false"/>
+                <overriden-day-types/>
+                <days/>
+            </calendar>
+        </day-types>
+    </calendars>
+    <tasks color="#8cb6ce">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+            <taskproperty id="tpc0" name="Dia" type="custom" valuetype="text" defaultvalue=""/>
+            <taskproperty id="tpc1" name="Horas" type="custom" valuetype="int" defaultvalue="0"/>
+        </taskproperties>
+        <task id="3" name="Toma de requerimientos" color="#8cb6ce" meeting="false" start="2011-08-01" duration="5" complete="0" expand="true">
+            <notes><![CDATA[1-2 = 6
+3-4 = 16
+5 = 3
+
+Total: 25 hrs Project Manager / Analisys]]></notes>
+            <depend id="4" type="2" difference="0" hardness="Strong"/>
+            <customproperty taskproperty-id="tpc0" value=""/>
+            <customproperty taskproperty-id="tpc1" value="0"/>
+        </task>
+        <task id="4" name="Análisis de requerimientos" color="#8cb6ce" meeting="false" start="2011-08-06" duration="10" complete="0" expand="true">
+            <notes><![CDATA[6-9=12
+10-11=16
+12-15=12
+
+Total: 40 hrs Analisys / Analisys]]></notes>
+            <depend id="6" type="2" difference="0" hardness="Strong"/>
+            <depend id="8" type="2" difference="0" hardness="Strong"/>
+            <depend id="32" type="2" difference="0" hardness="Strong"/>
+            <customproperty taskproperty-id="tpc0" value=""/>
+            <customproperty taskproperty-id="tpc1" value="0"/>
+        </task>
+        <task id="8" name="Gestión del proyecto" color="#8cb6ce" meeting="false" start="2011-08-16" duration="7" complete="0" expand="true">
+            <customproperty taskproperty-id="tpc0" value=""/>
+            <customproperty taskproperty-id="tpc1" value="0"/>
+            <task id="10" name="Estimaciones" color="#8cb6ce" meeting="false" start="2011-08-16" duration="2" complete="0" expand="true">
+                <notes><![CDATA[16 =1.5
+17 = 4
+
+Total: 5.5 hrs Project Manager]]></notes>
+                <depend id="5" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="5" name="Análisis de riesgos" color="#8cb6ce" meeting="false" start="2011-08-18" duration="2" complete="0" expand="true">
+                <notes><![CDATA[18=4
+19=4
+
+Total: 8 Project Manager]]></notes>
+                <depend id="11" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="11" name="Planificación" color="#8cb6ce" meeting="false" start="2011-08-20" duration="3" complete="0" expand="true">
+                <notes><![CDATA[20-22 = 4.5
+
+Total: 4.5 hrs Project Manager]]></notes>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+        </task>
+        <task id="6" name="Modelamiento de BBDD" color="#8cb6ce" meeting="false" start="2011-08-16" duration="7" complete="0" expand="true">
+            <notes><![CDATA[16=1.5
+17-18=8
+19-22=6
+
+Total: 15.5 hrs Analisys / PQP
+
+16=0.75
+17-18=4
+19-22=3
+
+Total: 7.75 hrs Analisys / Avenda]]></notes>
+            <depend id="12" type="2" difference="0" hardness="Strong"/>
+            <depend id="13" type="2" difference="0" hardness="Strong"/>
+            <depend id="14" type="2" difference="0" hardness="Strong"/>
+            <customproperty taskproperty-id="tpc0" value=""/>
+            <customproperty taskproperty-id="tpc1" value="0"/>
+        </task>
+        <task id="32" name="Modelamiento UML" color="#8cb6ce" meeting="false" start="2011-08-16" duration="7" complete="0" expand="true">
+            <notes><![CDATA[16=1.5
+17-18=8
+19-22=6
+
+Total: 15.5 hrs Analisys / PQP
+
+16=0.75
+17-18=4
+19-22=3
+
+Total: 7.75 hrs Analisys / Avenda]]></notes>
+            <depend id="12" type="2" difference="0" hardness="Strong"/>
+            <depend id="13" type="2" difference="0" hardness="Strong"/>
+            <customproperty taskproperty-id="tpc0" value=""/>
+            <customproperty taskproperty-id="tpc1" value="0"/>
+        </task>
+        <task id="12" name="Programación del núcleo" color="#8cb6ce" meeting="false" start="2011-08-23" duration="24" complete="0" expand="true">
+            <customproperty taskproperty-id="tpc0" value=""/>
+            <customproperty taskproperty-id="tpc1" value="0"/>
+            <task id="14" name="Códificación capa lógica de negocio" color="#8cb6ce" meeting="false" start="2011-08-23" duration="18" complete="0" expand="true">
+                <notes><![CDATA[23 = 1.5
+24-25 = 8
+26-30=7.5
+1-2=8
+3-7=7.5
+8-9=8
+
+Total: 40.5 hrs Developer / Developers
+
+
+]]></notes>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="30" name="Códificación mensajería HL7" color="#8cb6ce" meeting="false" start="2011-09-11" duration="5" complete="0" expand="true">
+                <notes><![CDATA[11=4
+12-15=6
+
+Total: 10 hrs Developer / Developer]]></notes>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+        </task>
+        <task id="13" name="Programación de interfaces" color="#8cb6ce" meeting="false" start="2011-08-23" duration="24" complete="0" expand="true">
+            <customproperty taskproperty-id="tpc0" value=""/>
+            <customproperty taskproperty-id="tpc1" value="0"/>
+            <task id="18" name="Mantenedor de Ciudades" color="#8cb6ce" meeting="false" start="2011-08-23" duration="2" complete="0" expand="true">
+                <notes><![CDATA[23=1.5
+24=1.5
+
+Total: 3 hrs Developer]]></notes>
+                <depend id="21" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="21" name="Mantenedor de Sistemas de Salud" color="#8cb6ce" meeting="false" start="2011-08-25" duration="2" complete="0" expand="true">
+                <notes><![CDATA[25=1.5
+26=1.5
+
+Total: 3 hrs Developer]]></notes>
+                <depend id="22" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="22" name="Mantenedor Profesiones" color="#8cb6ce" meeting="false" start="2011-08-27" duration="2" complete="0" expand="true">
+                <notes><![CDATA[27=4
+28=4
+
+Total: 8 hrs Developer]]></notes>
+                <depend id="20" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="20" name="Mantenedor de Funcionarios" color="#8cb6ce" meeting="false" start="2011-08-29" duration="3" complete="0" expand="true">
+                <notes><![CDATA[29-31=4.5
+
+Total: 3 hrs Developer]]></notes>
+                <depend id="25" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="25" name="Mantenedor de Pacientes" color="#8cb6ce" meeting="false" start="2011-09-01" duration="4" complete="0" expand="true">
+                <notes><![CDATA[1-2=3
+3-4=8
+
+Total: 11 hrs Developer]]></notes>
+                <depend id="27" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="27" name="Generación de Agendas" color="#8cb6ce" meeting="false" start="2011-09-05" duration="5" complete="0" expand="true">
+                <notes><![CDATA[5-9=7.5
+
+Total: 7.5 Developer]]></notes>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="19" name="Mantenedor de Prestaciones" color="#8cb6ce" meeting="false" start="2011-08-23" duration="2" complete="0" expand="true">
+                <notes><![CDATA[23-24=3
+
+Total: 3 hrs Developer]]></notes>
+                <depend id="23" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="23" name="Mantenedor de Salas" color="#8cb6ce" meeting="false" start="2011-08-25" duration="2" complete="0" expand="true">
+                <notes><![CDATA[25-26=3
+
+Total: 3 hrs Developer]]></notes>
+                <depend id="24" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="24" name="Mantenedor de Derivadores" color="#8cb6ce" meeting="false" start="2011-08-27" duration="2" complete="0" expand="true">
+                <notes><![CDATA[27-28=8
+
+Total: 8 hrs Developer]]></notes>
+                <depend id="26" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="26" name="Administrador de Usuarios" color="#8cb6ce" meeting="false" start="2011-08-29" duration="4" complete="0" expand="true">
+                <notes><![CDATA[29-31=6
+
+Total: 6 hrs Developer]]></notes>
+                <depend id="28" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="28" name="Citación de Pacientes" color="#8cb6ce" meeting="false" start="2011-09-02" duration="4" complete="0" expand="true">
+                <notes><![CDATA[2=1.5
+3-4=8
+5=1.5
+
+Total: 11 hrs Developer]]></notes>
+                <depend id="29" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="29" name="Recepción de Pacientes" color="#8cb6ce" meeting="false" start="2011-09-06" duration="4" complete="0" expand="true">
+                <notes><![CDATA[6-9=6
+
+Total: 6 hrs Developer]]></notes>
+                <depend id="34" type="2" difference="0" hardness="Strong"/>
+                <depend id="35" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+            <task id="36" name="Recepción de Pacientes con HL7" color="#8cb6ce" meeting="false" start="2011-09-11" duration="5" complete="0" expand="true">
+                <notes><![CDATA[11= 4
+12-15=6
+
+Total 10 hrs Developer / Developer]]></notes>
+                <depend id="31" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value=""/>
+                <customproperty taskproperty-id="tpc1" value="0"/>
+            </task>
+        </task>
+        <task id="34" name="Instalación DCM4CHEE" color="#8cb6ce" meeting="false" start="2011-09-10" duration="1" complete="0" expand="true">
+            <notes><![CDATA[Instalación, configuración y puesta en marcha del servidor de software requerido para hacer correr los servicios necesarios para la administración del sistema PACS
+
+10 = 8
+
+Total: 8 hrs No definido]]></notes>
+            <depend id="36" type="2" difference="0" hardness="Strong"/>
+            <customproperty taskproperty-id="tpc0" value=""/>
+            <customproperty taskproperty-id="tpc1" value="0"/>
+        </task>
+        <task id="35" name="Instalación de emuladores" color="#8cb6ce" meeting="false" start="2011-09-10" duration="1" complete="0" expand="true">
+            <notes><![CDATA[Instalación, configuración y puesta en marcha del software DVTk y HL7 Inspector para poder realizar las pruebas al sistema en todo el flujo de trabajo, incluidas las modalidades.
+
+Total 8 hrs No defenidas]]></notes>
+            <depend id="36" type="2" difference="0" hardness="Strong"/>
+            <customproperty taskproperty-id="tpc0" value=""/>
+            <customproperty taskproperty-id="tpc1" value="0"/>
+        </task>
+        <task id="31" name="Pruebas y depuración" color="#8cb6ce" meeting="false" start="2011-09-16" duration="15" complete="0" expand="true">
+            <notes><![CDATA[16=3
+17-19=24
+20-23=12
+24-25=16
+26-30=18
+
+Total: 73 Developer / Developer]]></notes>
+            <depend id="37" type="2" difference="0" hardness="Strong"/>
+            <customproperty taskproperty-id="tpc0" value=""/>
+            <customproperty taskproperty-id="tpc1" value="0"/>
+        </task>
+        <task id="37" name="Documentación" color="#8cb6ce" meeting="false" start="2011-10-01" duration="5" complete="0" expand="true">
+            <notes><![CDATA[1-2=16
+3-5=9
+
+Total: 25 hrs Doc Writer / Doc Writer]]></notes>
+            <customproperty taskproperty-id="tpc0" value=""/>
+            <customproperty taskproperty-id="tpc1" value="0"/>
+        </task>
+    </tasks>
+    <resources>
+        <resource id="0" name="Víctor Avendaño F." function="SoftwareDevelopment:10" contacts="" phone=""/>
+        <resource id="1" name="Pablo Quiroz P." function="SoftwareDevelopment:10" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="3" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
+        <allocation task-id="4" resource-id="0" function="SoftwareDevelopment:8" responsible="false" load="100.0"/>
+        <allocation task-id="10" resource-id="0" function="Default:1" responsible="false" load="50.0"/>
+        <allocation task-id="5" resource-id="0" function="Default:1" responsible="true" load="50.0"/>
+        <allocation task-id="11" resource-id="0" function="Default:1" responsible="true" load="50.0"/>
+        <allocation task-id="32" resource-id="0" function="SoftwareDevelopment:8" responsible="false" load="25.0"/>
+        <allocation task-id="6" resource-id="0" function="SoftwareDevelopment:8" responsible="false" load="25.0"/>
+        <allocation task-id="14" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="30" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="18" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="21" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="22" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="20" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="25" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="27" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="34" resource-id="0" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="36" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="31" resource-id="0" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
+        <allocation task-id="37" resource-id="0" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+        <allocation task-id="3" resource-id="1" function="SoftwareDevelopment:8" responsible="false" load="100.0"/>
+        <allocation task-id="4" resource-id="1" function="SoftwareDevelopment:8" responsible="false" load="100.0"/>
+        <allocation task-id="6" resource-id="1" function="SoftwareDevelopment:8" responsible="false" load="50.0"/>
+        <allocation task-id="32" resource-id="1" function="SoftwareDevelopment:8" responsible="false" load="50.0"/>
+        <allocation task-id="14" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="30" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="19" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="23" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="24" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="26" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="28" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="29" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="35" resource-id="1" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="36" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="50.0"/>
+        <allocation task-id="31" resource-id="1" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
+        <allocation task-id="37" resource-id="1" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+    </allocations>
+    <vacations/>
+    <taskdisplaycolumns>
+        <displaycolumn property-id="tpd3" order="0" width="242"/>
+        <displaycolumn property-id="tpd4" order="1" width="67"/>
+        <displaycolumn property-id="tpd5" order="2" width="63"/>
+        <displaycolumn property-id="tpd6" order="3" width="21"/>
+        <displaycolumn property-id="tpc0" order="4" width="75"/>
+        <displaycolumn property-id="tpc1" order="5" width="75"/>
+    </taskdisplaycolumns>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles roleset-name="SoftwareDevelopment"/>
+</project>

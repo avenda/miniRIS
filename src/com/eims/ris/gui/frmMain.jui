@@ -1,0 +1,2059 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0" language="jambi">
+ <class>frmMain</class>
+ <widget class="QMainWindow" name="frmMain">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>780</width>
+    <height>450</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>780</width>
+    <height>450</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>eHC RIS - Menú principal</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>classpath:com/ehealthcare/ris/images/logo.png</normaloff>classpath:com/ehealthcare/ris/images/logo.png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>2</y>
+      <width>781</width>
+      <height>431</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">/*QTabWidget::pane {
+    border-top: 4px solid qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFE085, stop: 0.8 #CC9900);
+}
+ 
+QTabWidget::tab-bar {
+    left: 5px;
+}
+ 
+QTabBar::tab {
+    border: 1px solid #000000;
+    border-top-left-radius: 4px; 
+    border-top-right-radius: 4px;
+    min-width: 8ex;
+    padding: 2px; 
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+QTabBar::tab:selected {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #CC9900, stop: 0.8 #FFE085);
+    border-color: #000000;
+    border-bottom-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #CC9900, stop: 0.8 #FFE085);
+}
+ 
+QTabBar::tab:!selected {
+    background: #C2C7CB; 
+    border-bottom-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #CC9900, stop: 0.8 #FFE085); 
+    margin-top: 4px;
+}
+ 
+QTabBar::tab:first:selected {
+    margin-left: 0;
+}
+ 
+QTabBar::tab:last:selected {
+    margin-right: 0;
+}*/</string>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>32</width>
+      <height>32</height>
+     </size>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="icon">
+      <iconset>
+       <normaloff>classpath:com/ehealthcare/ris/images/paci64.png</normaloff>classpath:com/ehealthcare/ris/images/paci64.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Admisión</string>
+     </attribute>
+     <widget class="QPushButton" name="btnMBPac">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>30</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Buscar pacientes</string>
+      </property>
+      <property name="whatsThis">
+       <string>Pacientes</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/bpac64.png</normaloff>classpath:com/ehealthcare/ris/images/bpac64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMRece">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>30</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Recepción de pacientes, método abreviado [Alt+R]</string>
+      </property>
+      <property name="whatsThis">
+       <string>Recepciones</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/recep64.png</normaloff>classpath:com/ehealthcare/ris/images/recep64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+      <property name="shortcut">
+       <string>Alt+R</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMBRec">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>30</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Buscar recepciones</string>
+      </property>
+      <property name="whatsThis">
+       <string>BuscarRecepcion</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/search64.png</normaloff>classpath:com/ehealthcare/ris/images/search64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMCita">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>30</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Citación de pacientes, método abreviado [Alt+C]</string>
+      </property>
+      <property name="whatsThis">
+       <string>Citaciones</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/agenda64.png</normaloff>classpath:com/ehealthcare/ris/images/agenda64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+      <property name="shortcut">
+       <string>Alt+C</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnClose">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>150</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Cerrar el sistema eHC RIS, método abreviado [Alt+X]</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/close64.png</normaloff>classpath:com/ehealthcare/ris/images/close64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+      <property name="shortcut">
+       <string>Alt+X</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMPCit">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>150</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Pacientes citados</string>
+      </property>
+      <property name="whatsThis">
+       <string>PacientesCitados</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/pcit64.png</normaloff>classpath:com/ehealthcare/ris/images/pcit64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_22">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>110</y>
+        <width>76</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Citar
+Pacientes</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_23">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>110</y>
+        <width>76</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Recepcionar
+Pacientes</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_24">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>110</y>
+        <width>76</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Buscar
+Recepciones</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_25">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>110</y>
+        <width>76</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Buscar
+Pacientes</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_26">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>230</y>
+        <width>76</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Consultar
+Citaciones</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_27">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>230</y>
+        <width>76</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Salir del
+Sistema</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="icon">
+      <iconset>
+       <normaloff>classpath:com/ehealthcare/ris/images/worklist32.png</normaloff>classpath:com/ehealthcare/ris/images/worklist32.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Lista de Trabajo</string>
+     </attribute>
+     <widget class="QGroupBox" name="groupBox_4">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>20</y>
+        <width>281</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Para prestaciones</string>
+      </property>
+      <widget class="QLabel" name="label_12">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>76</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Radiografías</string>
+       </property>
+       <property name="alignment">
+        <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnMRX">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>76</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="statusTip">
+        <string>Worklist para prestaciones de radiografías</string>
+       </property>
+       <property name="whatsThis">
+        <string>WLRx</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>classpath:com/ehealthcare/ris/images/cr.png</normaloff>classpath:com/ehealthcare/ris/images/cr.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>64</width>
+         <height>64</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_13">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>200</y>
+         <width>76</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Ecotomografías</string>
+       </property>
+       <property name="alignment">
+        <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnMUS">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>120</y>
+         <width>76</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="statusTip">
+        <string>Worklist para prestaciones de ecotomografías</string>
+       </property>
+       <property name="whatsThis">
+        <string>WLEt</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>classpath:com/ehealthcare/ris/images/us.png</normaloff>classpath:com/ehealthcare/ris/images/us.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>64</width>
+         <height>64</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_14">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>100</y>
+         <width>76</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Mamografías</string>
+       </property>
+       <property name="alignment">
+        <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnMMG">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>20</y>
+         <width>76</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="statusTip">
+        <string>Worklist para prestaciones de mamografías</string>
+       </property>
+       <property name="whatsThis">
+        <string>WLMg</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>classpath:com/ehealthcare/ris/images/mg.png</normaloff>classpath:com/ehealthcare/ris/images/mg.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>64</width>
+         <height>64</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_15">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>200</y>
+         <width>76</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Tomografías</string>
+       </property>
+       <property name="alignment">
+        <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnMCT">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>120</y>
+         <width>76</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="statusTip">
+        <string>Worklist para prestaciones de tomografías computadas</string>
+       </property>
+       <property name="whatsThis">
+        <string>WLTc</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>classpath:com/ehealthcare/ris/images/ct.png</normaloff>classpath:com/ehealthcare/ris/images/ct.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>64</width>
+         <height>64</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_32">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>100</y>
+         <width>76</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Res. Magnética</string>
+       </property>
+       <property name="alignment">
+        <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnMMR">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>20</y>
+         <width>76</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="statusTip">
+        <string>Worklist para prestaciones de ecotomografías</string>
+       </property>
+       <property name="whatsThis">
+        <string>WLEt</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>classpath:com/ehealthcare/ris/images/mr.png</normaloff>classpath:com/ehealthcare/ris/images/mr.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>64</width>
+         <height>64</height>
+        </size>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_33">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>200</y>
+         <width>76</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Angiografías</string>
+       </property>
+       <property name="alignment">
+        <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnMXA">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>120</y>
+         <width>76</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="statusTip">
+        <string>Worklist para prestaciones de tomografías computadas</string>
+       </property>
+       <property name="whatsThis">
+        <string>WLTc</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>classpath:com/ehealthcare/ris/images/xa.png</normaloff>classpath:com/ehealthcare/ris/images/xa.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>64</width>
+         <height>64</height>
+        </size>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QGroupBox" name="groupBox_5">
+      <property name="geometry">
+       <rect>
+        <x>560</x>
+        <y>20</y>
+        <width>201</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <property name="title">
+       <string>Para transcripción de informes</string>
+      </property>
+      <widget class="QLabel" name="label_17">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>76</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Transcripción</string>
+       </property>
+       <property name="alignment">
+        <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnMTInf">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>76</width>
+         <height>75</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="statusTip">
+        <string>Worklist para transcripción de informes</string>
+       </property>
+       <property name="whatsThis">
+        <string>WLIRx</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>classpath:com/ehealthcare/ris/images/mic64.png</normaloff>classpath:com/ehealthcare/ris/images/mic64.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>64</width>
+         <height>64</height>
+        </size>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="icon">
+      <iconset>
+       <normaloff>classpath:com/ehealthcare/ris/images/print48.png</normaloff>classpath:com/ehealthcare/ris/images/print48.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Informes</string>
+     </attribute>
+     <widget class="QPushButton" name="btnMIRec">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>30</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Informe recepción de pacientes</string>
+      </property>
+      <property name="whatsThis">
+       <string>InfRecep</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/recep64.png</normaloff>classpath:com/ehealthcare/ris/images/recep64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_21">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>110</y>
+        <width>76</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Recepciones</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_28">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>110</y>
+        <width>76</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Lista de Espera</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMILEs">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>30</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Informe lista de espera</string>
+      </property>
+      <property name="whatsThis">
+       <string>InfListaEspera</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/lista_espera64.png</normaloff>classpath:com/ehealthcare/ris/images/lista_espera64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="icon">
+      <iconset>
+       <normaloff>classpath:com/ehealthcare/ris/images/chart32.png</normaloff>classpath:com/ehealthcare/ris/images/chart32.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Estadísticas</string>
+     </attribute>
+     <widget class="QPushButton" name="btnMMoni">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>30</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Monitorear en tiempo real</string>
+      </property>
+      <property name="whatsThis">
+       <string>Monitorear</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/monitor64.png</normaloff>classpath:com/ehealthcare/ris/images/monitor64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>110</y>
+        <width>76</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Monitorear</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMGRxT">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>30</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="whatsThis">
+       <string>GrafTipoRecep</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/tiporecep64.png</normaloff>classpath:com/ehealthcare/ris/images/tiporecep64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_29">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>110</y>
+        <width>76</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Recepciones
+por Tipo</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="icon">
+      <iconset>
+       <normaloff>classpath:com/ehealthcare/ris/images/archivo32.png</normaloff>classpath:com/ehealthcare/ris/images/archivo32.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Archivo</string>
+     </attribute>
+     <widget class="QPushButton" name="btnMPaci">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>140</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Archivo de pacientes</string>
+      </property>
+      <property name="whatsThis">
+       <string>Pacientes</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/paci64.png</normaloff>classpath:com/ehealthcare/ris/images/paci64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMFunc">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>140</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Archivo de funcionarios</string>
+      </property>
+      <property name="whatsThis">
+       <string>Funcionarios</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/func64.png</normaloff>classpath:com/ehealthcare/ris/images/func64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>220</y>
+        <width>76</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Pacientes</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>220</y>
+        <width>76</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Funcionarios</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>110</y>
+        <width>76</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Derivadores</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMDeri">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>30</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Mantención de derivadores</string>
+      </property>
+      <property name="whatsThis">
+       <string>Derivadores</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/local64.png</normaloff>classpath:com/ehealthcare/ris/images/local64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>110</y>
+        <width>76</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Sistema Salud</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMSSal">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>30</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Mantención sistemas de salud</string>
+      </property>
+      <property name="whatsThis">
+       <string>SistSalud</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/salud64.png</normaloff>classpath:com/ehealthcare/ris/images/salud64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>220</y>
+        <width>76</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Prestaciones</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMPres">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>140</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Archivo de prestaciones</string>
+      </property>
+      <property name="whatsThis">
+       <string>Prestaciones</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/rx64.png</normaloff>classpath:com/ehealthcare/ris/images/rx64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMProf">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>30</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Mantención de profesiones</string>
+      </property>
+      <property name="whatsThis">
+       <string>Profesiones</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/prof64.png</normaloff>classpath:com/ehealthcare/ris/images/prof64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_16">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>110</y>
+        <width>76</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Profesiones</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_19">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>110</y>
+        <width>76</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>RR.FF.</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMRRFF">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>30</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Mantención de recursos físicos</string>
+      </property>
+      <property name="whatsThis">
+       <string>RRFFs</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/sala64.png</normaloff>classpath:com/ehealthcare/ris/images/sala64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMCiud">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>140</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Archivo de ciudades</string>
+      </property>
+      <property name="whatsThis">
+       <string>Ciudades</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/city64.png</normaloff>classpath:com/ehealthcare/ris/images/city64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_30">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>220</y>
+        <width>76</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Ciudades</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_6">
+     <attribute name="icon">
+      <iconset>
+       <normaloff>classpath:com/ehealthcare/ris/images/admin32.png</normaloff>classpath:com/ehealthcare/ris/images/admin32.png</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Administración</string>
+     </attribute>
+     <widget class="QPushButton" name="btnMUser">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>130</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Administración de usuarios, método abreviado [Alt+U]</string>
+      </property>
+      <property name="whatsThis">
+       <string>Usuarios</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/user64.png</normaloff>classpath:com/ehealthcare/ris/images/user64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+      <property name="shortcut">
+       <string>Alt+U</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_18">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>210</y>
+        <width>76</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Usuarios</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_20">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>110</y>
+        <width>76</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Crear Agendas</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMCAge">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>30</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Creación de agenda de citaciones, método abreviado [Alt+A]</string>
+      </property>
+      <property name="whatsThis">
+       <string>Agendar</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/agendar64.png</normaloff>classpath:com/ehealthcare/ris/images/agendar64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+      <property name="shortcut">
+       <string>Alt+A</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_31">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>210</y>
+        <width>76</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Arial</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Preferencias</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btnMPref">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>130</y>
+        <width>76</width>
+        <height>75</height>
+       </rect>
+      </property>
+      <property name="cursor">
+       <cursorShape>PointingHandCursor</cursorShape>
+      </property>
+      <property name="statusTip">
+       <string>Creación de agenda de citaciones, método abreviado [Alt+A]</string>
+      </property>
+      <property name="whatsThis">
+       <string>Agendar</string>
+      </property>
+      <property name="icon">
+       <iconset>
+        <normaloff>classpath:com/ehealthcare/ris/images/prefe64.png</normaloff>classpath:com/ehealthcare/ris/images/prefe64.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>64</width>
+        <height>64</height>
+       </size>
+      </property>
+      <property name="shortcut">
+       <string>Alt+A</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="frmUser">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>68</y>
+      <width>221</width>
+      <height>321</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>com.trolltech.qt.gui.QFrame.Shape.StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>com.trolltech.qt.gui.QFrame.Shadow.Sunken</enum>
+    </property>
+    <widget class="QLabel" name="lblBGUser">
+     <property name="geometry">
+      <rect>
+       <x>2</x>
+       <y>2</y>
+       <width>217</width>
+       <height>317</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Gill Sans MT Condensed</family>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(2, 19, 62, 180));</string>
+     </property>
+     <property name="text">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Gill Sans MT Condensed'; font-size:12pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Bienvenido&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignLeft|com.trolltech.qt.core.Qt.AlignmentFlag.AlignTop</set>
+     </property>
+     <property name="margin">
+      <number>5</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblIconUser">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>54</width>
+       <height>54</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>classpath:com/ehealthcare/ris/images/user54.png</pixmap>
+     </property>
+     <property name="openExternalLinks">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblUser">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>40</y>
+       <width>141</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <stylestrategy>PreferAntialias</stylestrategy>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;&quot;&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;Usuario&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblUser_2">
+     <property name="geometry">
+      <rect>
+       <x>70</x>
+       <y>55</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <stylestrategy>PreferAntialias</stylestrategy>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;UserAccount&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignLeft|com.trolltech.qt.core.Qt.AlignmentFlag.AlignTop</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>2</x>
+       <y>2</y>
+       <width>217</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="pixmap">
+      <pixmap>classpath:com/ehealthcare/ris/images/bar147.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lblLogin">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>100</y>
+       <width>201</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Calibri'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'MS Shell Dlg 2'; font-size:8pt; color:#ffffff;&quot;&gt;Logueado: 01-01-2009 18:00&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>160</y>
+       <width>206</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:10pt; color:#e6e6e6;&quot;&gt;eHC RIS © 2011  v1.1&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:10pt; color:#e6e6e6;&quot;&gt;Gestión para Imagenología&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Calibri'; font-size:10pt;&quot;&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Calibri'; font-size:10pt; color:#e6e6e6;&quot;&gt;Parte de la familia EIMS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignLeft|com.trolltech.qt.core.Qt.AlignmentFlag.AlignTop</set>
+     </property>
+    </widget>
+    <widget class="QCommandLinkButton" name="cmdLBAbout">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>120</y>
+       <width>201</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="text">
+      <string>Acerca de...</string>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </widget>
+    <widget class="QFrame" name="frmSQL">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>250</y>
+       <width>161</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgba(255, 255, 255, 255), stop: 0.5 rgba(255, 255, 255, 255), stop: 0.5 rgba(254, 255, 170, 255), stop: 1 rgba(254, 255, 170, 255));
+/*background-color: rgb(248, 255, 184);*/
+border:2px solid rgb(170, 170, 127);
+border-radius:6px;</string>
+     </property>
+     <property name="frameShape">
+      <enum>com.trolltech.qt.gui.QFrame.Shape.StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>com.trolltech.qt.gui.QFrame.Shadow.Raised</enum>
+     </property>
+     <widget class="QLabel" name="lblCxHIS">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>28</y>
+        <width>24</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: none;
+border:none;</string>
+      </property>
+      <property name="pixmap">
+       <pixmap>classpath:com/ehealthcare/ris/images/red24.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lblCxRIS">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>28</y>
+        <width>24</width>
+        <height>24</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: none;
+border:none;</string>
+      </property>
+      <property name="pixmap">
+       <pixmap>classpath:com/ehealthcare/ris/images/green24.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>23</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: none;
+border:none;</string>
+      </property>
+      <property name="text">
+       <string>RIS</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>30</y>
+        <width>24</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: none;
+border:none;</string>
+      </property>
+      <property name="text">
+       <string>HIS</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>4</y>
+        <width>161</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Calibri</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: none;
+border:none;</string>
+      </property>
+      <property name="text">
+       <string>Conexión Servidor SQL</string>
+      </property>
+      <property name="alignment">
+       <set>com.trolltech.qt.core.Qt.AlignmentFlag.AlignHCenter|com.trolltech.qt.core.Qt.AlignmentFlag.AlignTop</set>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>btnMBPac</tabstop>
+  <tabstop>btnMRece</tabstop>
+  <tabstop>btnMBRec</tabstop>
+  <tabstop>btnMCita</tabstop>
+  <tabstop>btnClose</tabstop>
+  <tabstop>btnMPCit</tabstop>
+  <tabstop>btnMRX</tabstop>
+  <tabstop>btnMUS</tabstop>
+  <tabstop>btnMMG</tabstop>
+  <tabstop>btnMCT</tabstop>
+  <tabstop>btnMTInf</tabstop>
+  <tabstop>btnMIRec</tabstop>
+  <tabstop>btnMILEs</tabstop>
+  <tabstop>btnMMoni</tabstop>
+  <tabstop>btnMGRxT</tabstop>
+  <tabstop>btnMProf</tabstop>
+  <tabstop>btnMSSal</tabstop>
+  <tabstop>btnMRRFF</tabstop>
+  <tabstop>btnMDeri</tabstop>
+  <tabstop>btnMCiud</tabstop>
+  <tabstop>btnMPaci</tabstop>
+  <tabstop>btnMFunc</tabstop>
+  <tabstop>btnMPres</tabstop>
+  <tabstop>btnMCAge</tabstop>
+  <tabstop>btnMPref</tabstop>
+  <tabstop>btnMUser</tabstop>
+  <tabstop>cmdLBAbout</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>btnClose</sender>
+   <signal>clicked&lt;java.lang.Boolean&gt;</signal>
+   <receiver>frmMain</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>389</x>
+     <y>229</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>389</x>
+     <y>224</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -1,0 +1,3270 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Started on 2011-12-01 00:08:52 CLST
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+--
+-- TOC entry 1969 (class 1262 OID 16385)
+-- Name: dbRIS; Type: DATABASE; Schema: -; Owner: postgres
+--
+
+CREATE DATABASE "dbRIS" WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'es_CL.UTF-8' LC_CTYPE = 'es_CL.UTF-8';
+
+
+ALTER DATABASE "dbRIS" OWNER TO postgres;
+
+\connect "dbRIS"
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+--
+-- TOC entry 7 (class 2615 OID 16386)
+-- Name: miniris; Type: SCHEMA; Schema: -; Owner: grp_ris
+--
+
+CREATE SCHEMA miniris;
+
+
+ALTER SCHEMA miniris OWNER TO grp_ris;
+
+--
+-- TOC entry 352 (class 2612 OID 16389)
+-- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: -; Owner: postgres
+--
+
+CREATE PROCEDURAL LANGUAGE plpgsql;
+
+
+ALTER PROCEDURAL LANGUAGE plpgsql OWNER TO postgres;
+
+SET search_path = miniris, pg_catalog;
+
+--
+-- TOC entry 20 (class 1255 OID 16390)
+-- Dependencies: 7 352
+-- Name: fn_ciudad_insert(character varying); Type: FUNCTION; Schema: miniris; Owner: grp_ris
+--
+
+CREATE FUNCTION fn_ciudad_insert(character varying) RETURNS smallint
+    LANGUAGE plpgsql
+    AS $_$DECLARE
+  descripcion ALIAS FOR $1;
+BEGIN
+  INSERT INTO miniris.ciudades (ciu_desc) VALUES(descripcion);
+  RETURN CURRVAL('miniris.ciudades_ciu_id_seq');
+END;$_$;
+
+
+ALTER FUNCTION miniris.fn_ciudad_insert(character varying) OWNER TO grp_ris;
+
+--
+-- TOC entry 1973 (class 0 OID 0)
+-- Dependencies: 20
+-- Name: FUNCTION fn_ciudad_insert(character varying); Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON FUNCTION fn_ciudad_insert(character varying) IS 'Funcion para insertar una nueva ciudad';
+
+
+--
+-- TOC entry 21 (class 1255 OID 16391)
+-- Dependencies: 352 7
+-- Name: fn_ciudad_update(smallint, character varying); Type: FUNCTION; Schema: miniris; Owner: grp_ris
+--
+
+CREATE FUNCTION fn_ciudad_update("p_CIU_ID" smallint, "p_CIU_DESC" character varying) RETURNS void
+    LANGUAGE plpgsql
+    AS $_$--DECLARE
+  --id ALIAS FOR $1;
+  --descripcion ALIAS FOR $2;
+BEGIN
+  UPDATE miniris.ciudades SET ciu_desc=p_CIU_DESC WHERE ciu_id=p_CIU_ID;
+END;$_$;
+
+
+ALTER FUNCTION miniris.fn_ciudad_update("p_CIU_ID" smallint, "p_CIU_DESC" character varying) OWNER TO grp_ris;
+
+--
+-- TOC entry 1974 (class 0 OID 0)
+-- Dependencies: 21
+-- Name: FUNCTION fn_ciudad_update("p_CIU_ID" smallint, "p_CIU_DESC" character varying); Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON FUNCTION fn_ciudad_update("p_CIU_ID" smallint, "p_CIU_DESC" character varying) IS 'Funcion para actualizar un registro de ciudades';
+
+
+--
+-- TOC entry 1539 (class 1259 OID 16392)
+-- Dependencies: 7
+-- Name: citaciones_cita_id_seq; Type: SEQUENCE; Schema: miniris; Owner: grp_ris
+--
+
+CREATE SEQUENCE citaciones_cita_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE miniris.citaciones_cita_id_seq OWNER TO grp_ris;
+
+--
+-- TOC entry 1975 (class 0 OID 0)
+-- Dependencies: 1539
+-- Name: citaciones_cita_id_seq; Type: SEQUENCE SET; Schema: miniris; Owner: grp_ris
+--
+
+SELECT pg_catalog.setval('citaciones_cita_id_seq', 2916, true);
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 1540 (class 1259 OID 16394)
+-- Dependencies: 1845 1846 1847 1848 7
+-- Name: citaciones; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE citaciones (
+    cita_id bigint DEFAULT nextval('citaciones_cita_id_seq'::regclass) NOT NULL,
+    eps_id bigint,
+    cita_feho timestamp without time zone NOT NULL,
+    fun_id smallint NOT NULL,
+    rf_id smallint NOT NULL,
+    cita_esta character(1) DEFAULT 'D'::bpchar NOT NULL,
+    cita_stor character(1) DEFAULT 'D'::bpchar NOT NULL,
+    cita_obse character varying(50),
+    cita_fhdi timestamp without time zone DEFAULT now() NOT NULL,
+    cita_user character(20) NOT NULL
+);
+
+
+ALTER TABLE miniris.citaciones OWNER TO grp_ris;
+
+--
+-- TOC entry 1976 (class 0 OID 0)
+-- Dependencies: 1540
+-- Name: TABLE citaciones; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE citaciones IS 'Tabla de citaciones';
+
+
+--
+-- TOC entry 1977 (class 0 OID 0)
+-- Dependencies: 1540
+-- Name: COLUMN citaciones.cita_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN citaciones.cita_id IS 'Identificador';
+
+
+--
+-- TOC entry 1978 (class 0 OID 0)
+-- Dependencies: 1540
+-- Name: COLUMN citaciones.eps_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN citaciones.eps_id IS 'ID Recepcion';
+
+
+--
+-- TOC entry 1979 (class 0 OID 0)
+-- Dependencies: 1540
+-- Name: COLUMN citaciones.cita_feho; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN citaciones.cita_feho IS 'Fecha/Hora Citacion';
+
+
+--
+-- TOC entry 1980 (class 0 OID 0)
+-- Dependencies: 1540
+-- Name: COLUMN citaciones.fun_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN citaciones.fun_id IS 'Responsable';
+
+
+--
+-- TOC entry 1981 (class 0 OID 0)
+-- Dependencies: 1540
+-- Name: COLUMN citaciones.rf_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN citaciones.rf_id IS 'RR.FF.';
+
+
+--
+-- TOC entry 1982 (class 0 OID 0)
+-- Dependencies: 1540
+-- Name: COLUMN citaciones.cita_esta; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN citaciones.cita_esta IS 'Status';
+
+
+--
+-- TOC entry 1983 (class 0 OID 0)
+-- Dependencies: 1540
+-- Name: COLUMN citaciones.cita_stor; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN citaciones.cita_stor IS 'Status Original';
+
+
+--
+-- TOC entry 1984 (class 0 OID 0)
+-- Dependencies: 1540
+-- Name: COLUMN citaciones.cita_obse; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN citaciones.cita_obse IS 'Comentario';
+
+
+--
+-- TOC entry 1985 (class 0 OID 0)
+-- Dependencies: 1540
+-- Name: COLUMN citaciones.cita_fhdi; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN citaciones.cita_fhdi IS 'Fecha/Hora Digitacion';
+
+
+--
+-- TOC entry 1986 (class 0 OID 0)
+-- Dependencies: 1540
+-- Name: COLUMN citaciones.cita_user; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN citaciones.cita_user IS 'Usuario';
+
+
+--
+-- TOC entry 1541 (class 1259 OID 16401)
+-- Dependencies: 7
+-- Name: ciudades_ciu_id_seq; Type: SEQUENCE; Schema: miniris; Owner: grp_ris
+--
+
+CREATE SEQUENCE ciudades_ciu_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE miniris.ciudades_ciu_id_seq OWNER TO grp_ris;
+
+--
+-- TOC entry 1988 (class 0 OID 0)
+-- Dependencies: 1541
+-- Name: ciudades_ciu_id_seq; Type: SEQUENCE SET; Schema: miniris; Owner: grp_ris
+--
+
+SELECT pg_catalog.setval('ciudades_ciu_id_seq', 4, true);
+
+
+--
+-- TOC entry 1542 (class 1259 OID 16403)
+-- Dependencies: 1849 7
+-- Name: ciudades; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE ciudades (
+    ciu_id smallint DEFAULT nextval('ciudades_ciu_id_seq'::regclass) NOT NULL,
+    ciu_desc character varying(50)
+);
+
+
+ALTER TABLE miniris.ciudades OWNER TO grp_ris;
+
+--
+-- TOC entry 1989 (class 0 OID 0)
+-- Dependencies: 1542
+-- Name: TABLE ciudades; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE ciudades IS 'Tabla de ciudades';
+
+
+--
+-- TOC entry 1990 (class 0 OID 0)
+-- Dependencies: 1542
+-- Name: COLUMN ciudades.ciu_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN ciudades.ciu_id IS 'Identificador';
+
+
+--
+-- TOC entry 1991 (class 0 OID 0)
+-- Dependencies: 1542
+-- Name: COLUMN ciudades.ciu_desc; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN ciudades.ciu_desc IS 'Descripción';
+
+
+--
+-- TOC entry 1543 (class 1259 OID 16407)
+-- Dependencies: 7
+-- Name: clases; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE clases (
+    cls_id character(20) NOT NULL,
+    cls_desc character varying(50) NOT NULL
+);
+
+
+ALTER TABLE miniris.clases OWNER TO grp_ris;
+
+--
+-- TOC entry 1992 (class 0 OID 0)
+-- Dependencies: 1543
+-- Name: TABLE clases; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE clases IS 'Tabla de clases de formularios del sistema';
+
+
+--
+-- TOC entry 1993 (class 0 OID 0)
+-- Dependencies: 1543
+-- Name: COLUMN clases.cls_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN clases.cls_id IS 'Identificador';
+
+
+--
+-- TOC entry 1994 (class 0 OID 0)
+-- Dependencies: 1543
+-- Name: COLUMN clases.cls_desc; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN clases.cls_desc IS 'Descripcion';
+
+
+--
+-- TOC entry 1544 (class 1259 OID 16410)
+-- Dependencies: 1850 7
+-- Name: derivadores; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE derivadores (
+    deri_id smallint NOT NULL,
+    deri_desc character varying(50) NOT NULL,
+    deri_tipo smallint NOT NULL,
+    deri_vige boolean DEFAULT true
+);
+ALTER TABLE ONLY derivadores ALTER COLUMN deri_desc SET STORAGE PLAIN;
+
+
+ALTER TABLE miniris.derivadores OWNER TO grp_ris;
+
+--
+-- TOC entry 1996 (class 0 OID 0)
+-- Dependencies: 1544
+-- Name: TABLE derivadores; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE derivadores IS 'Tabla de lugares de derivacion';
+
+
+--
+-- TOC entry 1997 (class 0 OID 0)
+-- Dependencies: 1544
+-- Name: COLUMN derivadores.deri_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN derivadores.deri_id IS 'Identificador';
+
+
+--
+-- TOC entry 1998 (class 0 OID 0)
+-- Dependencies: 1544
+-- Name: COLUMN derivadores.deri_desc; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN derivadores.deri_desc IS 'Descripcion';
+
+
+--
+-- TOC entry 1999 (class 0 OID 0)
+-- Dependencies: 1544
+-- Name: COLUMN derivadores.deri_tipo; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN derivadores.deri_tipo IS 'ID Tipo';
+
+
+--
+-- TOC entry 2000 (class 0 OID 0)
+-- Dependencies: 1544
+-- Name: COLUMN derivadores.deri_vige; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN derivadores.deri_vige IS 'Vigente';
+
+
+--
+-- TOC entry 1545 (class 1259 OID 16414)
+-- Dependencies: 7 1544
+-- Name: derivadores_deri_id_seq; Type: SEQUENCE; Schema: miniris; Owner: grp_ris
+--
+
+CREATE SEQUENCE derivadores_deri_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE miniris.derivadores_deri_id_seq OWNER TO grp_ris;
+
+--
+-- TOC entry 2002 (class 0 OID 0)
+-- Dependencies: 1545
+-- Name: derivadores_deri_id_seq; Type: SEQUENCE OWNED BY; Schema: miniris; Owner: grp_ris
+--
+
+ALTER SEQUENCE derivadores_deri_id_seq OWNED BY derivadores.deri_id;
+
+
+--
+-- TOC entry 2003 (class 0 OID 0)
+-- Dependencies: 1545
+-- Name: derivadores_deri_id_seq; Type: SEQUENCE SET; Schema: miniris; Owner: grp_ris
+--
+
+SELECT pg_catalog.setval('derivadores_deri_id_seq', 81, true);
+
+
+--
+-- TOC entry 1546 (class 1259 OID 16416)
+-- Dependencies: 1852 7
+-- Name: funcionarios; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE funcionarios (
+    fun_id smallint NOT NULL,
+    fun_nomb character varying(50) NOT NULL,
+    fun_apat character varying(20),
+    fun_amat character varying(20),
+    fun_inic character varying(10) NOT NULL,
+    prf_id smallint NOT NULL,
+    fun_vige boolean DEFAULT true
+);
+
+
+ALTER TABLE miniris.funcionarios OWNER TO grp_ris;
+
+--
+-- TOC entry 2004 (class 0 OID 0)
+-- Dependencies: 1546
+-- Name: TABLE funcionarios; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE funcionarios IS 'Tabla de funcionarios de la unidad de imagenologia';
+
+
+--
+-- TOC entry 2005 (class 0 OID 0)
+-- Dependencies: 1546
+-- Name: COLUMN funcionarios.fun_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN funcionarios.fun_id IS 'Identificador';
+
+
+--
+-- TOC entry 2006 (class 0 OID 0)
+-- Dependencies: 1546
+-- Name: COLUMN funcionarios.fun_nomb; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN funcionarios.fun_nomb IS 'Nombres';
+
+
+--
+-- TOC entry 2007 (class 0 OID 0)
+-- Dependencies: 1546
+-- Name: COLUMN funcionarios.fun_apat; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN funcionarios.fun_apat IS 'A. Paterno';
+
+
+--
+-- TOC entry 2008 (class 0 OID 0)
+-- Dependencies: 1546
+-- Name: COLUMN funcionarios.fun_amat; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN funcionarios.fun_amat IS 'A. Materno';
+
+
+--
+-- TOC entry 2009 (class 0 OID 0)
+-- Dependencies: 1546
+-- Name: COLUMN funcionarios.fun_inic; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN funcionarios.fun_inic IS 'Iniciales';
+
+
+--
+-- TOC entry 2010 (class 0 OID 0)
+-- Dependencies: 1546
+-- Name: COLUMN funcionarios.prf_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN funcionarios.prf_id IS 'Profesion';
+
+
+--
+-- TOC entry 2011 (class 0 OID 0)
+-- Dependencies: 1546
+-- Name: COLUMN funcionarios.fun_vige; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN funcionarios.fun_vige IS 'Vigencia';
+
+
+--
+-- TOC entry 1547 (class 1259 OID 16420)
+-- Dependencies: 7 1546
+-- Name: funcionarios_fun_id_seq; Type: SEQUENCE; Schema: miniris; Owner: grp_ris
+--
+
+CREATE SEQUENCE funcionarios_fun_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE miniris.funcionarios_fun_id_seq OWNER TO grp_ris;
+
+--
+-- TOC entry 2012 (class 0 OID 0)
+-- Dependencies: 1547
+-- Name: funcionarios_fun_id_seq; Type: SEQUENCE OWNED BY; Schema: miniris; Owner: grp_ris
+--
+
+ALTER SEQUENCE funcionarios_fun_id_seq OWNED BY funcionarios.fun_id;
+
+
+--
+-- TOC entry 2013 (class 0 OID 0)
+-- Dependencies: 1547
+-- Name: funcionarios_fun_id_seq; Type: SEQUENCE SET; Schema: miniris; Owner: grp_ris
+--
+
+SELECT pg_catalog.setval('funcionarios_fun_id_seq', 17, true);
+
+
+--
+-- TOC entry 1548 (class 1259 OID 16422)
+-- Dependencies: 7
+-- Name: pacientes; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE pacientes (
+    pac_id integer NOT NULL,
+    pac_run character(10),
+    pac_fich integer,
+    pac_nomb character varying(30) NOT NULL,
+    pac_apat character varying(20) NOT NULL,
+    pac_amat character varying(20),
+    pac_fnac date,
+    pac_sexo character(1) NOT NULL,
+    pac_dire character varying(100),
+    pac_fon1 character varying(15),
+    pac_fon2 character varying(15),
+    pac_mail character varying(100),
+    ssa_id smallint,
+    ciu_id smallint
+);
+
+
+ALTER TABLE miniris.pacientes OWNER TO grp_ris;
+
+--
+-- TOC entry 2014 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: TABLE pacientes; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE pacientes IS 'Tabla de pacientes';
+
+
+--
+-- TOC entry 2015 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: COLUMN pacientes.pac_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN pacientes.pac_id IS 'Identificador';
+
+
+--
+-- TOC entry 2016 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: COLUMN pacientes.pac_run; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN pacientes.pac_run IS 'RUN';
+
+
+--
+-- TOC entry 2017 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: COLUMN pacientes.pac_fich; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN pacientes.pac_fich IS 'Nro Ficha';
+
+
+--
+-- TOC entry 2018 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: COLUMN pacientes.pac_nomb; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN pacientes.pac_nomb IS 'Nombres';
+
+
+--
+-- TOC entry 2019 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: COLUMN pacientes.pac_apat; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN pacientes.pac_apat IS 'A. Paterno';
+
+
+--
+-- TOC entry 2020 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: COLUMN pacientes.pac_amat; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN pacientes.pac_amat IS 'A. Materno';
+
+
+--
+-- TOC entry 2021 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: COLUMN pacientes.pac_fnac; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN pacientes.pac_fnac IS 'F. Nacimiento';
+
+
+--
+-- TOC entry 2022 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: COLUMN pacientes.pac_sexo; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN pacientes.pac_sexo IS 'Sexo';
+
+
+--
+-- TOC entry 2023 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: COLUMN pacientes.pac_dire; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN pacientes.pac_dire IS 'Direccion';
+
+
+--
+-- TOC entry 2024 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: COLUMN pacientes.pac_fon1; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN pacientes.pac_fon1 IS 'Fono 1';
+
+
+--
+-- TOC entry 2025 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: COLUMN pacientes.pac_fon2; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN pacientes.pac_fon2 IS 'Fono 2';
+
+
+--
+-- TOC entry 2026 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: COLUMN pacientes.pac_mail; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN pacientes.pac_mail IS 'E-Mail';
+
+
+--
+-- TOC entry 2027 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: COLUMN pacientes.ssa_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN pacientes.ssa_id IS 'ID Sistema salud';
+
+
+--
+-- TOC entry 2028 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: COLUMN pacientes.ciu_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN pacientes.ciu_id IS 'ID Ciudad';
+
+
+--
+-- TOC entry 1549 (class 1259 OID 16425)
+-- Dependencies: 7 1548
+-- Name: pacientes_pac_id_seq; Type: SEQUENCE; Schema: miniris; Owner: grp_ris
+--
+
+CREATE SEQUENCE pacientes_pac_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE miniris.pacientes_pac_id_seq OWNER TO grp_ris;
+
+--
+-- TOC entry 2030 (class 0 OID 0)
+-- Dependencies: 1549
+-- Name: pacientes_pac_id_seq; Type: SEQUENCE OWNED BY; Schema: miniris; Owner: grp_ris
+--
+
+ALTER SEQUENCE pacientes_pac_id_seq OWNED BY pacientes.pac_id;
+
+
+--
+-- TOC entry 2031 (class 0 OID 0)
+-- Dependencies: 1549
+-- Name: pacientes_pac_id_seq; Type: SEQUENCE SET; Schema: miniris; Owner: grp_ris
+--
+
+SELECT pg_catalog.setval('pacientes_pac_id_seq', 10, true);
+
+
+--
+-- TOC entry 1550 (class 1259 OID 16427)
+-- Dependencies: 1855 7
+-- Name: parametros; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE parametros (
+    par_grupo character(2) NOT NULL,
+    par_id smallint NOT NULL,
+    par_desc character varying(45) NOT NULL,
+    par_info character varying(45),
+    par_vige boolean DEFAULT true
+);
+
+
+ALTER TABLE miniris.parametros OWNER TO grp_ris;
+
+--
+-- TOC entry 2032 (class 0 OID 0)
+-- Dependencies: 1550
+-- Name: TABLE parametros; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE parametros IS 'Tabla para parametros generales del sistema';
+
+
+--
+-- TOC entry 2033 (class 0 OID 0)
+-- Dependencies: 1550
+-- Name: COLUMN parametros.par_grupo; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN parametros.par_grupo IS 'Grupo';
+
+
+--
+-- TOC entry 2034 (class 0 OID 0)
+-- Dependencies: 1550
+-- Name: COLUMN parametros.par_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN parametros.par_id IS 'Identificador';
+
+
+--
+-- TOC entry 2035 (class 0 OID 0)
+-- Dependencies: 1550
+-- Name: COLUMN parametros.par_desc; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN parametros.par_desc IS 'Descripcion';
+
+
+--
+-- TOC entry 2036 (class 0 OID 0)
+-- Dependencies: 1550
+-- Name: COLUMN parametros.par_info; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN parametros.par_info IS 'Informacion';
+
+
+--
+-- TOC entry 2037 (class 0 OID 0)
+-- Dependencies: 1550
+-- Name: COLUMN parametros.par_vige; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN parametros.par_vige IS 'Vigente';
+
+
+--
+-- TOC entry 1551 (class 1259 OID 16431)
+-- Dependencies: 7
+-- Name: plantillas_agendas_det; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE plantillas_agendas_det (
+    pae_id integer NOT NULL,
+    pad_lun character(5),
+    pad_mar character(5),
+    pad_mie character(5),
+    pad_jue character(5),
+    pad_vie character(5),
+    pad_sab character(5),
+    pad_dom character(5)
+);
+
+
+ALTER TABLE miniris.plantillas_agendas_det OWNER TO grp_ris;
+
+--
+-- TOC entry 2039 (class 0 OID 0)
+-- Dependencies: 1551
+-- Name: TABLE plantillas_agendas_det; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE plantillas_agendas_det IS 'Tabla detalle de plantillas de agendas';
+
+
+--
+-- TOC entry 1552 (class 1259 OID 16434)
+-- Dependencies: 7
+-- Name: plantillas_agendas_enc_pae_id_seq; Type: SEQUENCE; Schema: miniris; Owner: grp_ris
+--
+
+CREATE SEQUENCE plantillas_agendas_enc_pae_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE miniris.plantillas_agendas_enc_pae_id_seq OWNER TO grp_ris;
+
+--
+-- TOC entry 2040 (class 0 OID 0)
+-- Dependencies: 1552
+-- Name: plantillas_agendas_enc_pae_id_seq; Type: SEQUENCE SET; Schema: miniris; Owner: grp_ris
+--
+
+SELECT pg_catalog.setval('plantillas_agendas_enc_pae_id_seq', 34, true);
+
+
+--
+-- TOC entry 1553 (class 1259 OID 16436)
+-- Dependencies: 1856 1857 1858 1859 1860 1861 1862 1863 1864 7
+-- Name: plantillas_agendas_enc; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE plantillas_agendas_enc (
+    pae_id integer DEFAULT nextval('plantillas_agendas_enc_pae_id_seq'::regclass) NOT NULL,
+    fun_id smallint NOT NULL,
+    rf_id smallint NOT NULL,
+    pae_fcre date DEFAULT ('now'::text)::date,
+    pae_desc character varying(80),
+    pae_ccup smallint,
+    pae_itvo smallint,
+    pae_hini character(5),
+    pae_lun boolean DEFAULT false NOT NULL,
+    pae_mar boolean DEFAULT false NOT NULL,
+    pae_mie boolean DEFAULT false NOT NULL,
+    pae_jue boolean DEFAULT false NOT NULL,
+    pae_vie boolean DEFAULT false NOT NULL,
+    pae_sab boolean DEFAULT false NOT NULL,
+    pae_dom boolean DEFAULT false NOT NULL
+);
+
+
+ALTER TABLE miniris.plantillas_agendas_enc OWNER TO grp_ris;
+
+--
+-- TOC entry 2041 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: TABLE plantillas_agendas_enc; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE plantillas_agendas_enc IS 'Tabla para plantillas de agendas';
+
+
+--
+-- TOC entry 2042 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.pae_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.pae_id IS 'Identificador';
+
+
+--
+-- TOC entry 2043 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.fun_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.fun_id IS 'Profesional';
+
+
+--
+-- TOC entry 2044 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.rf_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.rf_id IS 'RR.FF.';
+
+
+--
+-- TOC entry 2045 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.pae_fcre; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.pae_fcre IS 'Fecha creacion';
+
+
+--
+-- TOC entry 2046 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.pae_desc; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.pae_desc IS 'Descripcion';
+
+
+--
+-- TOC entry 2047 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.pae_ccup; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.pae_ccup IS 'Cantidad de cupos';
+
+
+--
+-- TOC entry 2048 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.pae_itvo; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.pae_itvo IS 'Intervalo';
+
+
+--
+-- TOC entry 2049 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.pae_hini; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.pae_hini IS 'Hora inicio';
+
+
+--
+-- TOC entry 2050 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.pae_lun; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.pae_lun IS 'Lunes';
+
+
+--
+-- TOC entry 2051 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.pae_mar; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.pae_mar IS 'Martes';
+
+
+--
+-- TOC entry 2052 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.pae_mie; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.pae_mie IS 'Miercoles';
+
+
+--
+-- TOC entry 2053 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.pae_jue; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.pae_jue IS 'Jueves';
+
+
+--
+-- TOC entry 2054 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.pae_vie; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.pae_vie IS 'Viernes';
+
+
+--
+-- TOC entry 2055 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.pae_sab; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.pae_sab IS 'Sabado';
+
+
+--
+-- TOC entry 2056 (class 0 OID 0)
+-- Dependencies: 1553
+-- Name: COLUMN plantillas_agendas_enc.pae_dom; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN plantillas_agendas_enc.pae_dom IS 'Domingo';
+
+
+--
+-- TOC entry 1554 (class 1259 OID 16448)
+-- Dependencies: 1865 7
+-- Name: prestaciones; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE prestaciones (
+    prest_id character(10) NOT NULL,
+    prest_desc character varying(150) NOT NULL,
+    prest_tipo smallint NOT NULL,
+    rf_id smallint NOT NULL,
+    prest_vige boolean DEFAULT true
+);
+
+
+ALTER TABLE miniris.prestaciones OWNER TO grp_ris;
+
+--
+-- TOC entry 2057 (class 0 OID 0)
+-- Dependencies: 1554
+-- Name: TABLE prestaciones; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE prestaciones IS 'Tabla de prestaciones';
+
+
+--
+-- TOC entry 2058 (class 0 OID 0)
+-- Dependencies: 1554
+-- Name: COLUMN prestaciones.prest_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestaciones.prest_id IS 'Identificador';
+
+
+--
+-- TOC entry 2059 (class 0 OID 0)
+-- Dependencies: 1554
+-- Name: COLUMN prestaciones.prest_desc; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestaciones.prest_desc IS 'Descripcion';
+
+
+--
+-- TOC entry 2060 (class 0 OID 0)
+-- Dependencies: 1554
+-- Name: COLUMN prestaciones.prest_tipo; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestaciones.prest_tipo IS 'Tipo';
+
+
+--
+-- TOC entry 2061 (class 0 OID 0)
+-- Dependencies: 1554
+-- Name: COLUMN prestaciones.rf_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestaciones.rf_id IS 'Sala x defecto';
+
+
+--
+-- TOC entry 2062 (class 0 OID 0)
+-- Dependencies: 1554
+-- Name: COLUMN prestaciones.prest_vige; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestaciones.prest_vige IS 'Vigencia';
+
+
+--
+-- TOC entry 1555 (class 1259 OID 16452)
+-- Dependencies: 7
+-- Name: prestsol_det; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE prestsol_det (
+    eps_id bigint NOT NULL,
+    prest_id character(10) NOT NULL,
+    dps_cant smallint NOT NULL,
+    fun_id smallint NOT NULL,
+    dps_toma boolean,
+    dps_fhto timestamp without time zone
+);
+
+
+ALTER TABLE miniris.prestsol_det OWNER TO grp_ris;
+
+--
+-- TOC entry 2064 (class 0 OID 0)
+-- Dependencies: 1555
+-- Name: TABLE prestsol_det; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE prestsol_det IS 'Tabla transaccional prestaciones solicitadas (Detalle)';
+
+
+--
+-- TOC entry 2065 (class 0 OID 0)
+-- Dependencies: 1555
+-- Name: COLUMN prestsol_det.eps_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_det.eps_id IS 'Identificador';
+
+
+--
+-- TOC entry 2066 (class 0 OID 0)
+-- Dependencies: 1555
+-- Name: COLUMN prestsol_det.prest_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_det.prest_id IS 'Prestacion';
+
+
+--
+-- TOC entry 2067 (class 0 OID 0)
+-- Dependencies: 1555
+-- Name: COLUMN prestsol_det.dps_cant; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_det.dps_cant IS 'Cantidad';
+
+
+--
+-- TOC entry 2068 (class 0 OID 0)
+-- Dependencies: 1555
+-- Name: COLUMN prestsol_det.fun_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_det.fun_id IS 'Responsable';
+
+
+--
+-- TOC entry 2069 (class 0 OID 0)
+-- Dependencies: 1555
+-- Name: COLUMN prestsol_det.dps_toma; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_det.dps_toma IS 'Tomado?';
+
+
+--
+-- TOC entry 2070 (class 0 OID 0)
+-- Dependencies: 1555
+-- Name: COLUMN prestsol_det.dps_fhto; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_det.dps_fhto IS 'Fecha/Hora Toma';
+
+
+--
+-- TOC entry 1556 (class 1259 OID 16455)
+-- Dependencies: 1866 1867 1868 1869 1870 1871 7
+-- Name: prestsol_enc; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE prestsol_enc (
+    eps_id bigint NOT NULL,
+    eps_trec smallint NOT NULL,
+    eps_fhre timestamp without time zone,
+    pac_id integer NOT NULL,
+    eps_dau integer,
+    eps_ccte integer,
+    deri_id smallint NOT NULL,
+    ssa_id smallint NOT NULL,
+    eps_nurg smallint NOT NULL,
+    rf_id smallint NOT NULL,
+    eps_ures smallint NOT NULL,
+    eps_cita bigint DEFAULT (-1) NOT NULL,
+    eps_obse character varying(100),
+    eps_fhdi timestamp without time zone DEFAULT now(),
+    eps_user character(20),
+    eps_erec smallint DEFAULT 0 NOT NULL,
+    eps_pinf smallint DEFAULT 0 NOT NULL,
+    eps_info bigint DEFAULT 0,
+    eps_pasi boolean DEFAULT false NOT NULL
+);
+
+
+ALTER TABLE miniris.prestsol_enc OWNER TO grp_ris;
+
+--
+-- TOC entry 2072 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: TABLE prestsol_enc; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE prestsol_enc IS 'Tabla transaccional prestaciones solicitadas (Encabezado)';
+
+
+--
+-- TOC entry 2073 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_id IS 'Identificador';
+
+
+--
+-- TOC entry 2074 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_trec; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_trec IS 'Tipo recepcion';
+
+
+--
+-- TOC entry 2075 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_fhre; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_fhre IS 'Fecha/Hora Recepcion';
+
+
+--
+-- TOC entry 2076 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.pac_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.pac_id IS 'Paciente';
+
+
+--
+-- TOC entry 2077 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_dau; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_dau IS 'DAU';
+
+
+--
+-- TOC entry 2078 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_ccte; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_ccte IS 'Cuenta corriente';
+
+
+--
+-- TOC entry 2079 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.deri_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.deri_id IS 'Derivador';
+
+
+--
+-- TOC entry 2080 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.ssa_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.ssa_id IS 'Sistema de salud';
+
+
+--
+-- TOC entry 2081 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_nurg; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_nurg IS 'Nivel urgencia';
+
+
+--
+-- TOC entry 2082 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.rf_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.rf_id IS 'Sala';
+
+
+--
+-- TOC entry 2083 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_ures; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_ures IS 'Responsable';
+
+
+--
+-- TOC entry 2084 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_cita; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_cita IS 'ID Citacion';
+
+
+--
+-- TOC entry 2085 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_obse; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_obse IS 'Observacion';
+
+
+--
+-- TOC entry 2086 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_fhdi; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_fhdi IS 'Fecha/Hora Digitacion';
+
+
+--
+-- TOC entry 2087 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_user; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_user IS 'Usuario';
+
+
+--
+-- TOC entry 2088 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_erec; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_erec IS 'Estado recepcion';
+
+
+--
+-- TOC entry 2089 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_pinf; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_pinf IS 'Prestacion con informe';
+
+
+--
+-- TOC entry 2090 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_info; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_info IS 'Info. adicional';
+
+
+--
+-- TOC entry 2091 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: COLUMN prestsol_enc.eps_pasi; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN prestsol_enc.eps_pasi IS 'Paciente asiste';
+
+
+--
+-- TOC entry 1557 (class 1259 OID 16461)
+-- Dependencies: 1872 7
+-- Name: profesiones; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE profesiones (
+    prf_id smallint NOT NULL,
+    prf_desc character varying(50) NOT NULL,
+    prf_abre character(4) NOT NULL,
+    prf_vige boolean DEFAULT true
+);
+
+
+ALTER TABLE miniris.profesiones OWNER TO grp_ris;
+
+--
+-- TOC entry 2093 (class 0 OID 0)
+-- Dependencies: 1557
+-- Name: TABLE profesiones; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE profesiones IS 'Tabla de profesiones';
+
+
+--
+-- TOC entry 2094 (class 0 OID 0)
+-- Dependencies: 1557
+-- Name: COLUMN profesiones.prf_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN profesiones.prf_id IS 'Identificador';
+
+
+--
+-- TOC entry 2095 (class 0 OID 0)
+-- Dependencies: 1557
+-- Name: COLUMN profesiones.prf_desc; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN profesiones.prf_desc IS 'Descripcion';
+
+
+--
+-- TOC entry 2096 (class 0 OID 0)
+-- Dependencies: 1557
+-- Name: COLUMN profesiones.prf_abre; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN profesiones.prf_abre IS 'Abreviacion';
+
+
+--
+-- TOC entry 2097 (class 0 OID 0)
+-- Dependencies: 1557
+-- Name: COLUMN profesiones.prf_vige; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN profesiones.prf_vige IS 'Vigencia';
+
+
+--
+-- TOC entry 1558 (class 1259 OID 16465)
+-- Dependencies: 1557 7
+-- Name: profesiones_prf_id_seq; Type: SEQUENCE; Schema: miniris; Owner: grp_ris
+--
+
+CREATE SEQUENCE profesiones_prf_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE miniris.profesiones_prf_id_seq OWNER TO grp_ris;
+
+--
+-- TOC entry 2099 (class 0 OID 0)
+-- Dependencies: 1558
+-- Name: profesiones_prf_id_seq; Type: SEQUENCE OWNED BY; Schema: miniris; Owner: grp_ris
+--
+
+ALTER SEQUENCE profesiones_prf_id_seq OWNED BY profesiones.prf_id;
+
+
+--
+-- TOC entry 2100 (class 0 OID 0)
+-- Dependencies: 1558
+-- Name: profesiones_prf_id_seq; Type: SEQUENCE SET; Schema: miniris; Owner: grp_ris
+--
+
+SELECT pg_catalog.setval('profesiones_prf_id_seq', 4, true);
+
+
+--
+-- TOC entry 1559 (class 1259 OID 16467)
+-- Dependencies: 7
+-- Name: rrffs_rf_id_seq; Type: SEQUENCE; Schema: miniris; Owner: grp_ris
+--
+
+CREATE SEQUENCE rrffs_rf_id_seq
+    START WITH 7
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE miniris.rrffs_rf_id_seq OWNER TO grp_ris;
+
+--
+-- TOC entry 2101 (class 0 OID 0)
+-- Dependencies: 1559
+-- Name: rrffs_rf_id_seq; Type: SEQUENCE SET; Schema: miniris; Owner: grp_ris
+--
+
+SELECT pg_catalog.setval('rrffs_rf_id_seq', 4, true);
+
+
+--
+-- TOC entry 1560 (class 1259 OID 16469)
+-- Dependencies: 1874 1875 7
+-- Name: rrffs; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE rrffs (
+    rf_id smallint DEFAULT nextval('rrffs_rf_id_seq'::regclass) NOT NULL,
+    rf_desc character varying(50) NOT NULL,
+    rf_moda smallint,
+    rf_vige boolean DEFAULT true
+);
+
+
+ALTER TABLE miniris.rrffs OWNER TO grp_ris;
+
+--
+-- TOC entry 2102 (class 0 OID 0)
+-- Dependencies: 1560
+-- Name: TABLE rrffs; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE rrffs IS 'Tabla de recursos fisicos';
+
+
+--
+-- TOC entry 2103 (class 0 OID 0)
+-- Dependencies: 1560
+-- Name: COLUMN rrffs.rf_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN rrffs.rf_id IS 'Identificador';
+
+
+--
+-- TOC entry 2104 (class 0 OID 0)
+-- Dependencies: 1560
+-- Name: COLUMN rrffs.rf_desc; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN rrffs.rf_desc IS 'Descripcion';
+
+
+--
+-- TOC entry 2105 (class 0 OID 0)
+-- Dependencies: 1560
+-- Name: COLUMN rrffs.rf_moda; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN rrffs.rf_moda IS 'Modalidad';
+
+
+--
+-- TOC entry 2106 (class 0 OID 0)
+-- Dependencies: 1560
+-- Name: COLUMN rrffs.rf_vige; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN rrffs.rf_vige IS 'Vigencia';
+
+
+--
+-- TOC entry 1561 (class 1259 OID 16474)
+-- Dependencies: 1876 7
+-- Name: salas_old; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE salas_old (
+    sala_id smallint NOT NULL,
+    sala_desc character varying(50) NOT NULL,
+    sala_vige boolean DEFAULT true
+);
+
+
+ALTER TABLE miniris.salas_old OWNER TO grp_ris;
+
+--
+-- TOC entry 2108 (class 0 OID 0)
+-- Dependencies: 1561
+-- Name: COLUMN salas_old.sala_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN salas_old.sala_id IS 'Identificador';
+
+
+--
+-- TOC entry 2109 (class 0 OID 0)
+-- Dependencies: 1561
+-- Name: COLUMN salas_old.sala_desc; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN salas_old.sala_desc IS 'Descripcion';
+
+
+--
+-- TOC entry 2110 (class 0 OID 0)
+-- Dependencies: 1561
+-- Name: COLUMN salas_old.sala_vige; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN salas_old.sala_vige IS 'Vigencia';
+
+
+--
+-- TOC entry 1562 (class 1259 OID 16478)
+-- Dependencies: 1561 7
+-- Name: salas_sala_id_seq; Type: SEQUENCE; Schema: miniris; Owner: grp_ris
+--
+
+CREATE SEQUENCE salas_sala_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE miniris.salas_sala_id_seq OWNER TO grp_ris;
+
+--
+-- TOC entry 2112 (class 0 OID 0)
+-- Dependencies: 1562
+-- Name: salas_sala_id_seq; Type: SEQUENCE OWNED BY; Schema: miniris; Owner: grp_ris
+--
+
+ALTER SEQUENCE salas_sala_id_seq OWNED BY salas_old.sala_id;
+
+
+--
+-- TOC entry 2113 (class 0 OID 0)
+-- Dependencies: 1562
+-- Name: salas_sala_id_seq; Type: SEQUENCE SET; Schema: miniris; Owner: grp_ris
+--
+
+SELECT pg_catalog.setval('salas_sala_id_seq', 6, true);
+
+
+--
+-- TOC entry 1563 (class 1259 OID 16480)
+-- Dependencies: 1878 7
+-- Name: sist_salud; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE sist_salud (
+    ssa_id smallint NOT NULL,
+    ssa_desc character varying(50) NOT NULL,
+    ssa_vige boolean DEFAULT true
+);
+
+
+ALTER TABLE miniris.sist_salud OWNER TO grp_ris;
+
+--
+-- TOC entry 2114 (class 0 OID 0)
+-- Dependencies: 1563
+-- Name: TABLE sist_salud; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE sist_salud IS 'Tabla de sistemas de salud';
+
+
+--
+-- TOC entry 2115 (class 0 OID 0)
+-- Dependencies: 1563
+-- Name: COLUMN sist_salud.ssa_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN sist_salud.ssa_id IS 'Identificador';
+
+
+--
+-- TOC entry 2116 (class 0 OID 0)
+-- Dependencies: 1563
+-- Name: COLUMN sist_salud.ssa_desc; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN sist_salud.ssa_desc IS 'Descripcion';
+
+
+--
+-- TOC entry 2117 (class 0 OID 0)
+-- Dependencies: 1563
+-- Name: COLUMN sist_salud.ssa_vige; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN sist_salud.ssa_vige IS 'Vigencia';
+
+
+--
+-- TOC entry 1564 (class 1259 OID 16484)
+-- Dependencies: 7 1563
+-- Name: sist_salud_ssa_id_seq; Type: SEQUENCE; Schema: miniris; Owner: grp_ris
+--
+
+CREATE SEQUENCE sist_salud_ssa_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE miniris.sist_salud_ssa_id_seq OWNER TO grp_ris;
+
+--
+-- TOC entry 2119 (class 0 OID 0)
+-- Dependencies: 1564
+-- Name: sist_salud_ssa_id_seq; Type: SEQUENCE OWNED BY; Schema: miniris; Owner: grp_ris
+--
+
+ALTER SEQUENCE sist_salud_ssa_id_seq OWNED BY sist_salud.ssa_id;
+
+
+--
+-- TOC entry 2120 (class 0 OID 0)
+-- Dependencies: 1564
+-- Name: sist_salud_ssa_id_seq; Type: SEQUENCE SET; Schema: miniris; Owner: grp_ris
+--
+
+SELECT pg_catalog.setval('sist_salud_ssa_id_seq', 3, true);
+
+
+--
+-- TOC entry 1565 (class 1259 OID 16486)
+-- Dependencies: 1880 1881 1882 1883 1884 7
+-- Name: user_access; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE user_access (
+    usu_id smallint NOT NULL,
+    cls_id character(20) NOT NULL,
+    acc_lect boolean DEFAULT false,
+    acc_ins boolean DEFAULT false,
+    acc_edit boolean DEFAULT false,
+    acc_elim boolean DEFAULT false,
+    acc_print boolean DEFAULT false
+);
+
+
+ALTER TABLE miniris.user_access OWNER TO grp_ris;
+
+--
+-- TOC entry 2121 (class 0 OID 0)
+-- Dependencies: 1565
+-- Name: TABLE user_access; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE user_access IS 'Tabla de detalle de accesos y privilegios de los usuarios';
+
+
+--
+-- TOC entry 2122 (class 0 OID 0)
+-- Dependencies: 1565
+-- Name: COLUMN user_access.usu_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN user_access.usu_id IS 'Id. Usuario';
+
+
+--
+-- TOC entry 2123 (class 0 OID 0)
+-- Dependencies: 1565
+-- Name: COLUMN user_access.cls_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN user_access.cls_id IS 'Id. Clase';
+
+
+--
+-- TOC entry 2124 (class 0 OID 0)
+-- Dependencies: 1565
+-- Name: COLUMN user_access.acc_lect; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN user_access.acc_lect IS 'Lectura';
+
+
+--
+-- TOC entry 2125 (class 0 OID 0)
+-- Dependencies: 1565
+-- Name: COLUMN user_access.acc_ins; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN user_access.acc_ins IS 'Insertar';
+
+
+--
+-- TOC entry 2126 (class 0 OID 0)
+-- Dependencies: 1565
+-- Name: COLUMN user_access.acc_edit; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN user_access.acc_edit IS 'Editar';
+
+
+--
+-- TOC entry 2127 (class 0 OID 0)
+-- Dependencies: 1565
+-- Name: COLUMN user_access.acc_elim; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN user_access.acc_elim IS 'Eliminar';
+
+
+--
+-- TOC entry 2128 (class 0 OID 0)
+-- Dependencies: 1565
+-- Name: COLUMN user_access.acc_print; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN user_access.acc_print IS 'Imprimir';
+
+
+--
+-- TOC entry 1566 (class 1259 OID 16494)
+-- Dependencies: 1885 1886 7
+-- Name: usuarios; Type: TABLE; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE TABLE usuarios (
+    usu_id smallint NOT NULL,
+    usu_acco character(20) NOT NULL,
+    usu_pass character(32) NOT NULL,
+    usu_nomb character varying(25) NOT NULL,
+    usu_apat character varying(20),
+    usu_amat character varying(20),
+    usu_desc character varying(40),
+    usu_fuac date,
+    usu_tipo smallint DEFAULT (0)::bigint NOT NULL,
+    usu_vige boolean DEFAULT true
+);
+
+
+ALTER TABLE miniris.usuarios OWNER TO grp_ris;
+
+--
+-- TOC entry 2130 (class 0 OID 0)
+-- Dependencies: 1566
+-- Name: TABLE usuarios; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON TABLE usuarios IS 'Tabla cuentas de usuarios';
+
+
+--
+-- TOC entry 2131 (class 0 OID 0)
+-- Dependencies: 1566
+-- Name: COLUMN usuarios.usu_id; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN usuarios.usu_id IS 'Identificador';
+
+
+--
+-- TOC entry 2132 (class 0 OID 0)
+-- Dependencies: 1566
+-- Name: COLUMN usuarios.usu_acco; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN usuarios.usu_acco IS 'Cuenta';
+
+
+--
+-- TOC entry 2133 (class 0 OID 0)
+-- Dependencies: 1566
+-- Name: COLUMN usuarios.usu_pass; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN usuarios.usu_pass IS 'Password';
+
+
+--
+-- TOC entry 2134 (class 0 OID 0)
+-- Dependencies: 1566
+-- Name: COLUMN usuarios.usu_nomb; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN usuarios.usu_nomb IS 'Nombres';
+
+
+--
+-- TOC entry 2135 (class 0 OID 0)
+-- Dependencies: 1566
+-- Name: COLUMN usuarios.usu_apat; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN usuarios.usu_apat IS 'A. Paterno';
+
+
+--
+-- TOC entry 2136 (class 0 OID 0)
+-- Dependencies: 1566
+-- Name: COLUMN usuarios.usu_amat; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN usuarios.usu_amat IS 'A. Materno';
+
+
+--
+-- TOC entry 2137 (class 0 OID 0)
+-- Dependencies: 1566
+-- Name: COLUMN usuarios.usu_desc; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN usuarios.usu_desc IS 'Descripcion';
+
+
+--
+-- TOC entry 2138 (class 0 OID 0)
+-- Dependencies: 1566
+-- Name: COLUMN usuarios.usu_fuac; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN usuarios.usu_fuac IS 'Fecha ultimo acceso';
+
+
+--
+-- TOC entry 2139 (class 0 OID 0)
+-- Dependencies: 1566
+-- Name: COLUMN usuarios.usu_tipo; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN usuarios.usu_tipo IS 'Tipo';
+
+
+--
+-- TOC entry 2140 (class 0 OID 0)
+-- Dependencies: 1566
+-- Name: COLUMN usuarios.usu_vige; Type: COMMENT; Schema: miniris; Owner: grp_ris
+--
+
+COMMENT ON COLUMN usuarios.usu_vige IS 'Vigente';
+
+
+--
+-- TOC entry 1567 (class 1259 OID 16499)
+-- Dependencies: 1566 7
+-- Name: usuarios_usu_id_seq; Type: SEQUENCE; Schema: miniris; Owner: grp_ris
+--
+
+CREATE SEQUENCE usuarios_usu_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE miniris.usuarios_usu_id_seq OWNER TO grp_ris;
+
+--
+-- TOC entry 2142 (class 0 OID 0)
+-- Dependencies: 1567
+-- Name: usuarios_usu_id_seq; Type: SEQUENCE OWNED BY; Schema: miniris; Owner: grp_ris
+--
+
+ALTER SEQUENCE usuarios_usu_id_seq OWNED BY usuarios.usu_id;
+
+
+--
+-- TOC entry 2143 (class 0 OID 0)
+-- Dependencies: 1567
+-- Name: usuarios_usu_id_seq; Type: SEQUENCE SET; Schema: miniris; Owner: grp_ris
+--
+
+SELECT pg_catalog.setval('usuarios_usu_id_seq', 3, true);
+
+
+--
+-- TOC entry 1851 (class 2604 OID 16501)
+-- Dependencies: 1545 1544
+-- Name: deri_id; Type: DEFAULT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE derivadores ALTER COLUMN deri_id SET DEFAULT nextval('derivadores_deri_id_seq'::regclass);
+
+
+--
+-- TOC entry 1853 (class 2604 OID 16502)
+-- Dependencies: 1547 1546
+-- Name: fun_id; Type: DEFAULT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE funcionarios ALTER COLUMN fun_id SET DEFAULT nextval('funcionarios_fun_id_seq'::regclass);
+
+
+--
+-- TOC entry 1854 (class 2604 OID 16503)
+-- Dependencies: 1549 1548
+-- Name: pac_id; Type: DEFAULT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE pacientes ALTER COLUMN pac_id SET DEFAULT nextval('pacientes_pac_id_seq'::regclass);
+
+
+--
+-- TOC entry 1873 (class 2604 OID 16504)
+-- Dependencies: 1558 1557
+-- Name: prf_id; Type: DEFAULT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE profesiones ALTER COLUMN prf_id SET DEFAULT nextval('profesiones_prf_id_seq'::regclass);
+
+
+--
+-- TOC entry 1877 (class 2604 OID 16505)
+-- Dependencies: 1562 1561
+-- Name: sala_id; Type: DEFAULT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE salas_old ALTER COLUMN sala_id SET DEFAULT nextval('salas_sala_id_seq'::regclass);
+
+
+--
+-- TOC entry 1879 (class 2604 OID 16506)
+-- Dependencies: 1564 1563
+-- Name: ssa_id; Type: DEFAULT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE sist_salud ALTER COLUMN ssa_id SET DEFAULT nextval('sist_salud_ssa_id_seq'::regclass);
+
+
+--
+-- TOC entry 1887 (class 2604 OID 16507)
+-- Dependencies: 1567 1566
+-- Name: usu_id; Type: DEFAULT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE usuarios ALTER COLUMN usu_id SET DEFAULT nextval('usuarios_usu_id_seq'::regclass);
+
+
+--
+-- TOC entry 1949 (class 0 OID 16394)
+-- Dependencies: 1540
+-- Data for Name: citaciones; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY citaciones (cita_id, eps_id, cita_feho, fun_id, rf_id, cita_esta, cita_stor, cita_obse, cita_fhdi, cita_user) FROM stdin;
+2873	\N	2011-11-01 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2874	\N	2011-11-02 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2875	\N	2011-11-03 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2876	\N	2011-11-04 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2877	\N	2011-11-07 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2878	\N	2011-11-08 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2879	\N	2011-11-09 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2880	\N	2011-11-10 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2881	\N	2011-11-11 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2882	\N	2011-11-14 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2883	\N	2011-11-15 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2884	\N	2011-11-16 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2885	\N	2011-11-17 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2886	\N	2011-11-18 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2887	\N	2011-11-21 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2888	\N	2011-11-22 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2889	\N	2011-11-23 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2890	\N	2011-11-24 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2891	\N	2011-11-25 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2892	\N	2011-11-28 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2893	\N	2011-11-29 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2894	\N	2011-11-30 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2895	\N	2011-12-01 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2896	\N	2011-12-02 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2897	\N	2011-12-05 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2898	\N	2011-12-06 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2899	\N	2011-12-07 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2900	\N	2011-12-08 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2901	\N	2011-12-09 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2902	\N	2011-12-12 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2903	\N	2011-12-13 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2904	\N	2011-12-14 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2905	\N	2011-12-15 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2906	\N	2011-12-16 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2907	\N	2011-12-19 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2908	\N	2011-12-20 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2909	\N	2011-12-21 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2911	\N	2011-12-23 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2912	\N	2011-12-26 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2913	\N	2011-12-27 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2914	\N	2011-12-28 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2915	\N	2011-12-29 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2916	\N	2011-12-30 09:00:00	1	2	D	D	Disponible	2011-11-30 20:03:03.343556	admin               
+2910	1111000001	2011-12-22 09:00:00	1	2	R	D	Reservada	2011-11-30 20:03:03.343556	admin               
+\.
+
+
+--
+-- TOC entry 1950 (class 0 OID 16403)
+-- Dependencies: 1542
+-- Data for Name: ciudades; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY ciudades (ciu_id, ciu_desc) FROM stdin;
+2	OSORNO
+3	VALDIVIA
+4	TEMUCO
+1	PUERTO MONTT
+\.
+
+
+--
+-- TOC entry 1951 (class 0 OID 16407)
+-- Dependencies: 1543
+-- Data for Name: clases; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY clases (cls_id, cls_desc) FROM stdin;
+Agendar             	Creación Agenda de Citaciones
+BuscarRecepcion     	Buscador de Recepciones
+Citaciones          	Citación de Pacientes
+Funcionarios        	Archivo de Funcionarios
+GrafTipoRecep       	Gráfico Recepciones por Tipo
+InfListaEspera      	Informe Lista de Espera
+InfRecep            	Informe de Recepciones
+Monitorear          	Monitor en Tiempo Real
+Pacientes           	Archivo de Pacientes
+Prestaciones        	Archivo de Prestaciones
+Profesiones         	Mantención de Profesiones
+SistSalud           	Mantención Sistemas de Salud
+Usuarios            	Administración de Usuarios
+WLEt                	Worklist para Ecotomografías
+WLIRx               	Worklist para Informe Radiografías
+WLMg                	Worklist para Mamografías
+WLRx                	Worklist para Radiografías
+WLTc                	Worklist para Tomografías Computadas
+Recepciones         	Recepción de pacientes
+Derivadores         	Archivo de Derivadores
+Ciudades            	Archivo de Ciudades
+RRFFs               	Mantención de RRFFs
+\.
+
+
+--
+-- TOC entry 1952 (class 0 OID 16410)
+-- Dependencies: 1544
+-- Data for Name: derivadores; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY derivadores (deri_id, deri_desc, deri_tipo, deri_vige) FROM stdin;
+2	NEUROCIRUGIA	3	t
+3	NEUROCIRUGIA	4	t
+4	NEUROLOGIA ADULTO	3	t
+5	NEUROLOGIA INFANTIL	3	t
+6	URGENCIA	4	t
+7	URGENCIA	5	t
+8	OTORRINOLARINGOLOGIA	4	t
+9	ALERCE	2	t
+10	ANGELMO	2	t
+11	SAN PABLO MIRASOL	2	t
+12	TECHO PARA TODOS	2	t
+13	CARMELA CARVAJAL	2	t
+14	ANTONIO VARAS	2	t
+15	RURAL	2	t
+16	TELETON	2	t
+17	BRONCOPULMONAR ADULTO	3	t
+18	BRONCOPULMONAR INFANTIL	3	t
+19	HORNOPIREN	1	t
+20	ANCUD	1	t
+21	FRESIA	1	t
+22	CASTRO	1	t
+23	LLANQUIHUE	1	t
+24	CALBUCO	1	t
+25	PEDIATRIA	3	t
+26	PSIQUIATRIA	4	t
+27	CIRUGIA ADULTO	3	t
+28	CIRUGIA INFANTIL	3	t
+29	TRAUMATOLOGIA	3	t
+30	MATERNIDAD	4	t
+31	GINECOLOGIA	3	t
+32	PATOLOGIA DE MAMAS	3	t
+33	PUERPERIO	4	t
+34	UCI ADULTO	4	t
+35	NEONATOLOGIA	4	t
+36	OFTALMOLOGIA	3	t
+37	PABELLON ESPECIALIDADES	3	t
+38	SIN INFORMACION	3	t
+39	DERMATOLOGIA	3	t
+40	UROLOGIA	3	t
+41	DEL DOLOR	3	t
+42	PADRE HURTADO	2	t
+43	ONCOLOGIA	3	t
+44	REUMATOLOGIA	3	t
+45	NEFROLOGIA	3	t
+46	PSIQUIATRIA	3	t
+47	ENDOCRINOLOGIA	3	t
+48	OTORRINOLARINGOLOGIA	3	t
+49	PERSONAL	3	t
+50	MEDICINA	4	t
+51	UROLOGIA	4	t
+52	GINECOLOGIA	4	t
+53	CIRUGIA ADULTO	4	t
+54	TRAUMATOLOGIA	4	t
+55	PEDIATRIA	4	t
+56	NEUROLOGIA ADULTO	4	t
+57	UCI PEDRIATRICA	4	t
+58	CIRUGIA INFANTIL	4	t
+59	PABELLON ESPECIALIDADES	4	t
+60	OBSTETRICIA	4	t
+61	EJERCITO DE CHILE	5	t
+62	LOS MUERMOS	1	t
+63	PARTICULAR	5	t
+64	PRAIS	3	t
+65	HEMATOLOGIA	3	t
+66	VALDIVIA	1	t
+67	COMPIN	3	t
+68	DIALISIS	3	t
+69	UTI ADULTO	4	t
+70	IMAGENOLOGIA	3	t
+71	MAXILO FACIAL	3	t
+72	DISPONIBLE	2	t
+73	PATOLOGIA CERVICAL	3	t
+74	MEDICINA FISICA Y REHABILITACION	3	t
+75	RECUPERACION	4	t
+76	UTI PEDIATRICA	4	t
+77	PENSIONADO	4	t
+78	MAXILO FACIAL	4	t
+1	MEDICINA	3	t
+\.
+
+
+--
+-- TOC entry 1953 (class 0 OID 16416)
+-- Dependencies: 1546
+-- Data for Name: funcionarios; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY funcionarios (fun_id, fun_nomb, fun_apat, fun_amat, fun_inic, prf_id, fun_vige) FROM stdin;
+4	RENATO	ALVARADO	VIDAL	RAV	1	t
+5	FRANCISCO	DOMINGUEZ	TRINCADO	FDT	2	t
+6	WALTER	ARAYA	C.	WAC	2	t
+7	ANA MARIA	LEIVA	R.	ALR	2	t
+8	ALEJANDRA	FERNANDEZ	ROA	AFR	2	t
+9	CLAUDIA	QUEZADA	C.	CQC	2	t
+10	SERGIO	PALOMO	V.	SPV	3	t
+11	FRANCISCO	OJEDA	G.	FOG	3	t
+12	CLARA	SALDOVAL	V.	CSV	3	t
+13	PATRICIA	TOLEDO	O.	PTO	3	t
+14	LORENA	CARDENAS	R.	LCR	3	t
+15	BERTA	NUÑEZ	U.	BNU	3	t
+16	JESICA	AYAN	A.	JAA	3	f
+2	JUVENAL	HERNANDEZ	VIDAL	JHV	1	t
+3	JORGE	ANDRADE	.	JA	1	t
+1	PROFESIONALES DE RAYOS			PDR	2	t
+\.
+
+
+--
+-- TOC entry 1954 (class 0 OID 16422)
+-- Dependencies: 1548
+-- Data for Name: pacientes; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY pacientes (pac_id, pac_run, pac_fich, pac_nomb, pac_apat, pac_amat, pac_fnac, pac_sexo, pac_dire, pac_fon1, pac_fon2, pac_mail, ssa_id, ciu_id) FROM stdin;
+7	16137069-K	1	VICTOR ESTEBAN	AVENDAÑO	FUENTES	1985-03-15	M	AVENIDA VICUÑA MACKENNA #2101	88993468	88993468	avenda@gmail.com	7	1
+8	17157677-6	2	CARLA	ALMONACID	HERNÁNDEZ	1989-09-16	M	CALLE LOS AROMOS #63	12345	12345	nose@dsds.com	2	1
+9	11111111-1	3	1AAAAA	RRRRRRRRRRR	HHHH	2010-01-01	M					2	1
+10	13295221-3	4	PABLO ANDRES	QUIROZ	PEREZ	1980-01-07	M	PUERTO MONTT	123	123		2	1
+\.
+
+
+--
+-- TOC entry 1955 (class 0 OID 16427)
+-- Dependencies: 1550
+-- Data for Name: parametros; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY parametros (par_grupo, par_id, par_desc, par_info, par_vige) FROM stdin;
+EI	1	Por informar	XI	t
+EI	2	Dictado	DI	t
+EI	3	Transcrito	IT	t
+EI	4	Definitivo	ID	t
+ER	1	Digitada	1	t
+ER	2	Realizada	1	t
+ER	3	Real. Parcial	0	t
+NU	1	Inmediata	1	t
+NU	2	Citación	\N	t
+NU	3	Lista Espera	\N	t
+NU	4	Dispinibilidad	\N	t
+PI	1	Sin informe	SI	t
+PI	2	Con informe	CI	t
+TC	1	Disponible	D	t
+TC	2	Reservada	R	t
+TC	3	Sobrecupo	S	t
+TC	4	Bloqueada	B	t
+TD	1	Area	AREA	t
+TD	2	Consultorio	CONS	t
+TD	3	Policlínico	POLI	t
+TD	4	Servicio	SERV	t
+TD	5	Unidad	UNID	t
+TR	2	Ambulatorio	A	t
+TR	3	Hospitalizado	H	t
+TP	1	Radiografía	\N	t
+TP	2	Ecotomografía	\N	t
+TP	3	Mamografía	\N	t
+TP	4	Tomografía	\N	t
+TP	5	Resonancia	\N	t
+TP	6	Angiografía	\N	t
+TP	8	Insumo	\N	t
+TP	9	Otro	\N	t
+TR	1	Urgencia	U	t
+MD	1	Radiografía Computada	CR	t
+MD	2	Tomografía Computada	CT	t
+MD	3	Radiografía Digital	DX	t
+MD	4	Mamografía	MG	t
+MD	5	Resonancia Magnética	MR	t
+MD	6	Ecotomografía	US	t
+MD	7	Angiografía	XA	t
+DF	1	Formato de fecha y hora	dd-MM-yyyy HH:mm:ss	t
+\.
+
+
+--
+-- TOC entry 1956 (class 0 OID 16431)
+-- Dependencies: 1551
+-- Data for Name: plantillas_agendas_det; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY plantillas_agendas_det (pae_id, pad_lun, pad_mar, pad_mie, pad_jue, pad_vie, pad_sab, pad_dom) FROM stdin;
+34	09:00	09:00	09:00	09:00	09:00	     	     
+\.
+
+
+--
+-- TOC entry 1957 (class 0 OID 16436)
+-- Dependencies: 1553
+-- Data for Name: plantillas_agendas_enc; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY plantillas_agendas_enc (pae_id, fun_id, rf_id, pae_fcre, pae_desc, pae_ccup, pae_itvo, pae_hini, pae_lun, pae_mar, pae_mie, pae_jue, pae_vie, pae_sab, pae_dom) FROM stdin;
+34	1	2	2011-11-30	AGENDA UNO	1	5	09:00	t	t	t	t	t	f	f
+\.
+
+
+--
+-- TOC entry 1958 (class 0 OID 16448)
+-- Dependencies: 1554
+-- Data for Name: prestaciones; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY prestaciones (prest_id, prest_desc, prest_tipo, rf_id, prest_vige) FROM stdin;
+0404004   	ECO. COMO APOYO A CIRUGIA	2	2	t
+0401008   	TORAX, RADIOGRAFIA CON EQUIPO MOVIL	1	3	t
+0401009   	TORAX SIMPLE (FRONTAL O LATERAL)	1	3	t
+0401013   	ABDOMEN SIMPLE (1 PROYECCION)	1	3	t
+0401044   	COLUMNA CERVICAL FUNCIONAL ADICIONAL	1	3	t
+0401045   	COLUMNA DORSAL O DORSOLUMBAR LOCALIZADA, PARRILA COSTAL Y FEMUR ADULTOS (FRONTAL Y LATERAL)	1	3	t
+0401046   	COLUMNA LUMBAR O LUMBOSACRA	1	3	t
+0401047   	COLUMNA LUMBAR O LUMBOSACRA FUNCIONAL	1	3	t
+0401048   	COLUMNA LUMBAR O LUMBOSACRA, OBLICUAS ADICIONALES	1	3	t
+0401049   	COLUMNA TOTAL O DORSOLUMBAR, PANORAMICA CON FOLIO GRADUADO	1	3	t
+0401051   	PELVIS, CADERA O COXOFEMORAL	1	1	t
+0401052   	PELVIS, CADERA O COXOFEMORAL, PROYECCIONES ESPECIALES (LAWENSTEIN)	1	1	t
+0401053   	SACROCOXIS O ARTICULACIONES SACROILIACAS	1	3	t
+0401054   	BRAZO, ANTEBRAZO, CODO, MUÑECA, MANO, DEDOS, PIE O SIMILAR (FRONTAL Y LATERAL)	1	3	t
+0401055   	CLAVICULA (2 EXP)	1	3	t
+0401056   	EDAD OSEA: CARPO Y MANO (1 EXP)	1	3	t
+0401060   	HOMBRO, FEMUR, RODILLA, PIERNA, COSTILLA O ESTERNON (FRONTAL Y LATERAL)	1	3	t
+0404009   	ECO. PELVICA	2	2	t
+0404010   	ECO. RENAL (BILATERAL)	2	2	t
+0404011   	ECO. CEREBRAL (R.N. O LACTANTE)	2	2	t
+0404012   	ECO. MAMARIA BILATERAL	2	2	t
+0404014   	ECO. TESTICULAR	2	2	t
+0404015   	ECO. TIROIDEA	2	2	t
+0404016   	ECO. VASCULAR PERIFERICA	2	2	t
+0401027   	PIELOGRAFIA	1	1	t
+0401028   	RENAL SIMPLE (PROC. AUT.) (1 EXP)	1	3	t
+0401029   	VESICAL SIMPLE O PERIVESICAL (PROC. AUT.) (1 EXP)	1	3	t
+0401031   	CAVIDADES PERINASALES, ORBITAS	1	3	t
+0401032   	CRANEO FRONTAL Y LATERAL (2 EXP)	1	3	t
+0401033   	CRANEO, CADA PROYECCION ESPECIAL: AXIAL, BASE, TOWNE, TANGENCIAL, ETC.	1	3	t
+0401040   	SILLA TURCA FRONTAL Y LATERAL	1	3	t
+0401042   	COLUMNA CERVICAL O ATLAS-AXIS	1	3	t
+0401043   	COLUMNA CERVICAL (FRONTAL, LATERAL Y OBLICUAS)	1	3	t
+0401062   	PROYECCIONES ESPECIALES OBLICUAS U OTRAS EN HOMBRO, BRAZO, CODO, RODILLA, ROTULAS, SESAMOIDEOS, AXIAL DE AMBAS ROTULAS O SIMILAR	1	3	t
+0401070   	TORAX (FRONTAL Y LATERAL)	1	3	t
+0404019   	ECO. VASCULAR PERIFERICA DOPPLER	2	2	t
+2104035   	BIOPSIA SINOVIAL O MUSCULAR POR PUNCION	9	2	t
+1163810   	DIATRIZOATO 76% FC X 60 ML	8	3	t
+1165781   	OPTIRAY JERINGA PRELLENADA 320 X 50 ML	8	3	t
+1165780   	OPTIRAY JERINGA PRELLENADA 320 X 100 ML	8	3	t
+0401130   	PROYECCION COMPLEMENTARIA DE MAMAS	3	3	t
+1165779   	OPTIRAY JERINGA PRELLENADA 320 X 125 ML	8	3	t
+0401015   	COLANGIOGRAFIA INTRA O POSTOPERATORIA X SONDA T	1	3	t
+0401019   	ENEMA BARITADA DEL COLON O INTESTINO DELGADO, DOBLE CONTRASTE	1	3	t
+0401020   	ESOFAGO SIMPLE	1	3	t
+0401021   	ESOFAGO, ESTOMAGO Y DUODENO, DOBLE CONTRASTE	1	3	t
+0401024   	ESOFAGO, ESTOMAGO Y DUODENO, SIMPLE EN NIÑOS	1	3	t
+0402011   	HISTEROSALPINGOGRAFIA	1	3	t
+0402014   	URETRO Y/O CISTOURETROGRAFIA	1	3	t
+0402025   	ARTERIOGRAFIA DE CADA EXTREMIDAD	1	3	t
+0402038   	FLEBOGRAFIA EXTREMIDAD INFERIOR	1	3	t
+0401110   	MAMOGRAFIA UNILATERAL (2 EXP)	3	3	t
+0401010   	MAMOGRAFIA BILATERAL (4 EXP)	3	3	t
+0401064   	APOYO FLUOROSCOPICO A PROCEDIMIENTOS INTRAOPERATORIOS Y/O BIOPSIA	1	3	t
+0403014   	ABDOMEN	4	4	t
+0401002   	PARTES BLANDAS; LARINGE LATERAL	1	3	t
+0403001   	CEREBRO SIMPLE	4	4	t
+0403002   	SILLA TURCA	4	4	t
+0403003   	ANGULO PONTO - CEREBELOSO	4	4	t
+0403004   	CORTES CORONALES COMPLEMENTARIOS	4	4	t
+0404003   	ECO. ABDOMINAL	2	4	t
+0403005   	CISTERNOGRAFIA (30 CORTES 4MM)	4	4	t
+0403006   	TEMPORAL - OIDO	4	4	t
+0403007   	ORBITAS MAXILOFACIAL	4	4	t
+0403008   	COLUMNA CERVICAL	4	4	t
+0403009   	COLUMNA DORSAL O LUMBAR (C/5 VERT.)	4	4	t
+0403010   	CADA ESPACIO ADICIONAL	4	4	t
+0403011   	TAC CON MIELOGRAFIA	4	4	t
+0403012   	CUELLO PARTES BLANDAS	4	4	t
+0403013   	TORAX TOTAL	4	4	t
+0403016   	PELVIS	4	4	t
+0403017   	EXTREMIDADES ESTUDIO LOCALIZADO	4	4	t
+0403018   	ANGIOTAC AORTICO	4	4	t
+0403101   	ANGIO TAC CEREBRO	4	4	t
+0403102   	ANGIO TAC TORAX	4	4	t
+0403103   	ANGIO TAC ABDOMEN	4	4	t
+\.
+
+
+--
+-- TOC entry 1959 (class 0 OID 16452)
+-- Dependencies: 1555
+-- Data for Name: prestsol_det; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY prestsol_det (eps_id, prest_id, dps_cant, fun_id, dps_toma, dps_fhto) FROM stdin;
+1111000001	0401002   	1	1	f	0002-11-30 00:00:00
+\.
+
+
+--
+-- TOC entry 1960 (class 0 OID 16455)
+-- Dependencies: 1556
+-- Data for Name: prestsol_enc; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY prestsol_enc (eps_id, eps_trec, eps_fhre, pac_id, eps_dau, eps_ccte, deri_id, ssa_id, eps_nurg, rf_id, eps_ures, eps_cita, eps_obse, eps_fhdi, eps_user, eps_erec, eps_pinf, eps_info, eps_pasi) FROM stdin;
+1111000001	2	\N	8	\N	\N	48	2	2	2	1	-1	CITADO POR SISTEMA	2011-11-30 20:03:52.758355	admin               	1	0	0	f
+\.
+
+
+--
+-- TOC entry 1961 (class 0 OID 16461)
+-- Dependencies: 1557
+-- Data for Name: profesiones; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY profesiones (prf_id, prf_desc, prf_abre, prf_vige) FROM stdin;
+4	INGENIERO	ING 	t
+1	MEDICO	MD  	t
+2	TECNOLOGO MEDICO	TM  	t
+3	TECNICO PARAMEDICO	TPM 	t
+\.
+
+
+--
+-- TOC entry 1962 (class 0 OID 16469)
+-- Dependencies: 1560
+-- Data for Name: rrffs; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY rrffs (rf_id, rf_desc, rf_moda, rf_vige) FROM stdin;
+1	SIN RRFF ASOCIADO	\N	t
+2	SALA 1 (OSTEOPULMONAR 1)	3	t
+3	SALA 2 (OSTEOPULMONAR 2)	3	t
+4	SALA SCANNER (16 CORTES)	2	t
+\.
+
+
+--
+-- TOC entry 1963 (class 0 OID 16474)
+-- Dependencies: 1561
+-- Data for Name: salas_old; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY salas_old (sala_id, sala_desc, sala_vige) FROM stdin;
+7	SALA 6 (RESONANCIA MAGNETICA)	t
+6	SALA 5 (MAMOGRAFIAS)	t
+5	SALA 4 (DIGESTIVOS)	t
+4	SALA 4 (PHILIPS)	t
+3	SALA 2 (ECOTOMOGRAFIAS)	t
+2	SALA 1 (CADERA DE NIÑOS)	t
+1	INSUMOS	t
+\.
+
+
+--
+-- TOC entry 1964 (class 0 OID 16480)
+-- Dependencies: 1563
+-- Data for Name: sist_salud; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY sist_salud (ssa_id, ssa_desc, ssa_vige) FROM stdin;
+2	FONASA B	t
+3	FONASA C	t
+4	FONASA D	t
+6	CONVENIO	t
+7	ACC. TRANSITO	t
+8	ACC. ESCOLAR	t
+9	ACC. TRABAJO	t
+10	ISAPRE	t
+11	PARTICULAR	t
+12	GES	t
+5	HOSPITALIZADO	t
+1	FONASA A	t
+\.
+
+
+--
+-- TOC entry 1965 (class 0 OID 16486)
+-- Dependencies: 1565
+-- Data for Name: user_access; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY user_access (usu_id, cls_id, acc_lect, acc_ins, acc_edit, acc_elim, acc_print) FROM stdin;
+3	Usuarios            	t	t	t	t	t
+3	Ciudades            	t	t	t	t	t
+3	Derivadores         	t	t	t	t	t
+3	Funcionarios        	t	f	f	f	f
+3	Pacientes           	t	t	t	t	t
+3	Prestaciones        	t	t	t	t	t
+3	BuscarRecepcion     	t	t	t	t	t
+3	Citaciones          	t	f	f	f	f
+3	Agendar             	t	f	f	f	f
+3	GrafTipoRecep       	t	f	f	f	f
+3	InfRecep            	t	f	f	f	f
+3	InfListaEspera      	t	f	f	f	f
+3	Profesiones         	t	f	f	f	f
+3	SistSalud           	t	f	f	f	f
+3	Monitorear          	t	f	f	f	f
+3	Recepciones         	t	f	f	f	f
+3	WLEt                	t	f	f	f	f
+3	WLIRx               	t	f	f	f	f
+3	WLMg                	t	f	f	f	f
+3	WLRx                	t	f	f	f	f
+3	WLTc                	t	f	f	f	f
+1	Usuarios            	t	t	t	t	t
+1	Ciudades            	t	t	t	t	t
+1	Derivadores         	t	t	t	t	t
+1	Funcionarios        	t	t	t	t	t
+1	Pacientes           	t	t	t	t	t
+1	Prestaciones        	t	t	t	t	t
+1	BuscarRecepcion     	t	t	t	t	t
+1	Citaciones          	t	t	t	t	t
+1	Agendar             	t	t	t	t	t
+1	GrafTipoRecep       	t	t	t	t	t
+1	InfRecep            	t	t	t	t	t
+1	InfListaEspera      	t	t	t	t	t
+1	Profesiones         	t	t	t	t	t
+1	SistSalud           	t	t	t	t	t
+1	Monitorear          	t	t	t	t	t
+1	Recepciones         	t	t	t	t	t
+1	WLEt                	t	t	t	t	t
+1	WLIRx               	t	t	t	t	t
+1	WLMg                	t	t	t	t	t
+1	WLRx                	t	t	t	t	t
+1	WLTc                	t	t	t	t	t
+3	RRFFs               	t	f	f	f	f
+1	RRFFs               	t	t	t	t	t
+2	Usuarios            	t	t	t	t	t
+2	Ciudades            	t	t	f	t	f
+2	Derivadores         	t	f	f	f	f
+2	Funcionarios        	t	t	t	t	t
+2	BuscarRecepcion     	t	t	t	t	t
+2	Citaciones          	t	t	t	t	t
+2	Agendar             	t	t	t	t	t
+2	GrafTipoRecep       	t	t	t	t	t
+2	InfRecep            	t	t	t	t	t
+2	InfListaEspera      	t	t	t	t	t
+2	Profesiones         	t	t	t	t	t
+2	RRFFs               	t	t	t	t	t
+2	SistSalud           	t	t	t	t	t
+2	Monitorear          	t	t	t	t	t
+2	Recepciones         	t	t	t	t	t
+2	WLEt                	t	t	t	t	t
+2	WLIRx               	t	t	t	t	t
+2	WLMg                	t	t	t	t	t
+2	WLRx                	t	t	t	t	t
+2	WLTc                	t	t	t	t	t
+\.
+
+
+--
+-- TOC entry 1966 (class 0 OID 16494)
+-- Dependencies: 1566
+-- Data for Name: usuarios; Type: TABLE DATA; Schema: miniris; Owner: grp_ris
+--
+
+COPY usuarios (usu_id, usu_acco, usu_pass, usu_nomb, usu_apat, usu_amat, usu_desc, usu_fuac, usu_tipo, usu_vige) FROM stdin;
+3	avenda              	202cb962ac59075b964b07152d234b70	Victor	Avendaño	Fuentes	sadasd	2011-09-25	1	t
+2	pquiroz             	202cb962ac59075b964b07152d234b70	Pablo	Quiroz	Pérez	Administrador	2011-11-20	1	t
+1	admin               	202cb962ac59075b964b07152d234b70	Administrador			Administrador del Sistema	2011-12-01	1	t
+\.
+
+
+--
+-- TOC entry 1889 (class 2606 OID 16509)
+-- Dependencies: 1540 1540
+-- Name: citaciones_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY citaciones
+    ADD CONSTRAINT citaciones_pkey PRIMARY KEY (cita_id);
+
+
+--
+-- TOC entry 1894 (class 2606 OID 16511)
+-- Dependencies: 1542 1542
+-- Name: ciudades_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY ciudades
+    ADD CONSTRAINT ciudades_pkey PRIMARY KEY (ciu_id);
+
+
+--
+-- TOC entry 1896 (class 2606 OID 16513)
+-- Dependencies: 1543 1543
+-- Name: clases_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY clases
+    ADD CONSTRAINT clases_pkey PRIMARY KEY (cls_id);
+
+
+--
+-- TOC entry 1898 (class 2606 OID 16515)
+-- Dependencies: 1544 1544
+-- Name: derivadores_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY derivadores
+    ADD CONSTRAINT derivadores_pkey PRIMARY KEY (deri_id);
+
+
+--
+-- TOC entry 1902 (class 2606 OID 16517)
+-- Dependencies: 1546 1546
+-- Name: funcionarios_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY funcionarios
+    ADD CONSTRAINT funcionarios_pkey PRIMARY KEY (fun_id);
+
+
+--
+-- TOC entry 1900 (class 2606 OID 16519)
+-- Dependencies: 1544 1544 1544
+-- Name: idx_deri_01; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY derivadores
+    ADD CONSTRAINT idx_deri_01 UNIQUE (deri_desc, deri_tipo);
+
+
+--
+-- TOC entry 1909 (class 2606 OID 16521)
+-- Dependencies: 1548 1548
+-- Name: pacientes_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY pacientes
+    ADD CONSTRAINT pacientes_pkey PRIMARY KEY (pac_id);
+
+
+--
+-- TOC entry 1911 (class 2606 OID 16523)
+-- Dependencies: 1550 1550 1550
+-- Name: parametros_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY parametros
+    ADD CONSTRAINT parametros_pkey PRIMARY KEY (par_grupo, par_id);
+
+
+--
+-- TOC entry 1913 (class 2606 OID 16525)
+-- Dependencies: 1553 1553
+-- Name: plantillas_agendas_enc_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY plantillas_agendas_enc
+    ADD CONSTRAINT plantillas_agendas_enc_pkey PRIMARY KEY (pae_id);
+
+
+--
+-- TOC entry 1915 (class 2606 OID 16527)
+-- Dependencies: 1554 1554
+-- Name: prestaciones_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY prestaciones
+    ADD CONSTRAINT prestaciones_pkey PRIMARY KEY (prest_id);
+
+
+--
+-- TOC entry 1918 (class 2606 OID 16529)
+-- Dependencies: 1555 1555 1555
+-- Name: prestsol_det_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY prestsol_det
+    ADD CONSTRAINT prestsol_det_pkey PRIMARY KEY (eps_id, prest_id);
+
+
+--
+-- TOC entry 1921 (class 2606 OID 16531)
+-- Dependencies: 1556 1556
+-- Name: prestsol_enc_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY prestsol_enc
+    ADD CONSTRAINT prestsol_enc_pkey PRIMARY KEY (eps_id);
+
+
+--
+-- TOC entry 1923 (class 2606 OID 16533)
+-- Dependencies: 1557 1557
+-- Name: profesiones_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY profesiones
+    ADD CONSTRAINT profesiones_pkey PRIMARY KEY (prf_id);
+
+
+--
+-- TOC entry 1925 (class 2606 OID 16535)
+-- Dependencies: 1560 1560
+-- Name: rrffs_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY rrffs
+    ADD CONSTRAINT rrffs_pkey PRIMARY KEY (rf_id);
+
+
+--
+-- TOC entry 1927 (class 2606 OID 16537)
+-- Dependencies: 1561 1561
+-- Name: salas_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY salas_old
+    ADD CONSTRAINT salas_pkey PRIMARY KEY (sala_id);
+
+
+--
+-- TOC entry 1929 (class 2606 OID 16539)
+-- Dependencies: 1563 1563
+-- Name: sist_salud_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY sist_salud
+    ADD CONSTRAINT sist_salud_pkey PRIMARY KEY (ssa_id);
+
+
+--
+-- TOC entry 1932 (class 2606 OID 16541)
+-- Dependencies: 1565 1565 1565
+-- Name: user_access_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY user_access
+    ADD CONSTRAINT user_access_pkey PRIMARY KEY (usu_id, cls_id);
+
+
+--
+-- TOC entry 1935 (class 2606 OID 16543)
+-- Dependencies: 1566 1566
+-- Name: usuarios_pkey; Type: CONSTRAINT; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+ALTER TABLE ONLY usuarios
+    ADD CONSTRAINT usuarios_pkey PRIMARY KEY (usu_id);
+
+
+--
+-- TOC entry 1930 (class 1259 OID 16544)
+-- Dependencies: 1565
+-- Name: fk_acc_cls_id1; Type: INDEX; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE INDEX fk_acc_cls_id1 ON user_access USING btree (cls_id);
+
+
+--
+-- TOC entry 1890 (class 1259 OID 16545)
+-- Dependencies: 1540
+-- Name: fk_cita_fun_id1; Type: INDEX; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE INDEX fk_cita_fun_id1 ON citaciones USING btree (fun_id);
+
+
+--
+-- TOC entry 1891 (class 1259 OID 16546)
+-- Dependencies: 1540
+-- Name: fk_cita_sala_id1; Type: INDEX; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE INDEX fk_cita_sala_id1 ON citaciones USING btree (rf_id);
+
+
+--
+-- TOC entry 1916 (class 1259 OID 16547)
+-- Dependencies: 1555
+-- Name: fk_dps_prest_id1; Type: INDEX; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE INDEX fk_dps_prest_id1 ON prestsol_det USING btree (prest_id);
+
+
+--
+-- TOC entry 1919 (class 1259 OID 16548)
+-- Dependencies: 1556
+-- Name: fk_eps_pac_id1; Type: INDEX; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE INDEX fk_eps_pac_id1 ON prestsol_enc USING btree (pac_id);
+
+
+--
+-- TOC entry 1892 (class 1259 OID 16549)
+-- Dependencies: 1540
+-- Name: idx_cita_eps_id; Type: INDEX; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE INDEX idx_cita_eps_id ON citaciones USING btree (eps_id);
+
+
+--
+-- TOC entry 1903 (class 1259 OID 16550)
+-- Dependencies: 1548
+-- Name: idx_pac_amat; Type: INDEX; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE INDEX idx_pac_amat ON pacientes USING btree (pac_amat);
+
+
+--
+-- TOC entry 1904 (class 1259 OID 16551)
+-- Dependencies: 1548
+-- Name: idx_pac_apat; Type: INDEX; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE INDEX idx_pac_apat ON pacientes USING btree (pac_apat);
+
+
+--
+-- TOC entry 1905 (class 1259 OID 16552)
+-- Dependencies: 1548
+-- Name: idx_pac_fich; Type: INDEX; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE INDEX idx_pac_fich ON pacientes USING btree (pac_fich);
+
+
+--
+-- TOC entry 1906 (class 1259 OID 16553)
+-- Dependencies: 1548
+-- Name: idx_pac_nomb; Type: INDEX; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE INDEX idx_pac_nomb ON pacientes USING btree (pac_nomb);
+
+
+--
+-- TOC entry 1907 (class 1259 OID 16554)
+-- Dependencies: 1548
+-- Name: idx_pac_run; Type: INDEX; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE INDEX idx_pac_run ON pacientes USING btree (pac_run);
+
+
+--
+-- TOC entry 1933 (class 1259 OID 16555)
+-- Dependencies: 1566
+-- Name: idx_usu_acco; Type: INDEX; Schema: miniris; Owner: grp_ris; Tablespace: 
+--
+
+CREATE UNIQUE INDEX idx_usu_acco ON usuarios USING btree (usu_acco);
+
+
+--
+-- TOC entry 1947 (class 2606 OID 16556)
+-- Dependencies: 1565 1543 1895
+-- Name: acc_cls_id_fk; Type: FK CONSTRAINT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE ONLY user_access
+    ADD CONSTRAINT acc_cls_id_fk FOREIGN KEY (cls_id) REFERENCES clases(cls_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 1948 (class 2606 OID 16561)
+-- Dependencies: 1565 1566 1934
+-- Name: acc_usu_id_fk; Type: FK CONSTRAINT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE ONLY user_access
+    ADD CONSTRAINT acc_usu_id_fk FOREIGN KEY (usu_id) REFERENCES usuarios(usu_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 1941 (class 2606 OID 16566)
+-- Dependencies: 1556 1920 1555
+-- Name: dps_eps_id_fk; Type: FK CONSTRAINT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE ONLY prestsol_det
+    ADD CONSTRAINT dps_eps_id_fk FOREIGN KEY (eps_id) REFERENCES prestsol_enc(eps_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 1942 (class 2606 OID 16571)
+-- Dependencies: 1555 1901 1546
+-- Name: dps_fun_id_fk; Type: FK CONSTRAINT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE ONLY prestsol_det
+    ADD CONSTRAINT dps_fun_id_fk FOREIGN KEY (fun_id) REFERENCES funcionarios(fun_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 1943 (class 2606 OID 16576)
+-- Dependencies: 1554 1914 1555
+-- Name: dps_prest_id_fk; Type: FK CONSTRAINT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE ONLY prestsol_det
+    ADD CONSTRAINT dps_prest_id_fk FOREIGN KEY (prest_id) REFERENCES prestaciones(prest_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 1944 (class 2606 OID 16581)
+-- Dependencies: 1897 1556 1544
+-- Name: eps_deri_id_fk; Type: FK CONSTRAINT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE ONLY prestsol_enc
+    ADD CONSTRAINT eps_deri_id_fk FOREIGN KEY (deri_id) REFERENCES derivadores(deri_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 1945 (class 2606 OID 16586)
+-- Dependencies: 1908 1556 1548
+-- Name: eps_pac_id_fk; Type: FK CONSTRAINT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE ONLY prestsol_enc
+    ADD CONSTRAINT eps_pac_id_fk FOREIGN KEY (pac_id) REFERENCES pacientes(pac_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 1946 (class 2606 OID 16591)
+-- Dependencies: 1563 1556 1928
+-- Name: eps_ssa_id_fk; Type: FK CONSTRAINT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE ONLY prestsol_enc
+    ADD CONSTRAINT eps_ssa_id_fk FOREIGN KEY (ssa_id) REFERENCES sist_salud(ssa_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 1936 (class 2606 OID 16596)
+-- Dependencies: 1557 1922 1546
+-- Name: fun_prf_id_fk; Type: FK CONSTRAINT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE ONLY funcionarios
+    ADD CONSTRAINT fun_prf_id_fk FOREIGN KEY (prf_id) REFERENCES profesiones(prf_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 1937 (class 2606 OID 16601)
+-- Dependencies: 1893 1542 1548
+-- Name: pac_ciu_id_fk; Type: FK CONSTRAINT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE ONLY pacientes
+    ADD CONSTRAINT pac_ciu_id_fk FOREIGN KEY (ciu_id) REFERENCES ciudades(ciu_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 1938 (class 2606 OID 16606)
+-- Dependencies: 1563 1548 1928
+-- Name: pac_ssa_id_fk; Type: FK CONSTRAINT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE ONLY pacientes
+    ADD CONSTRAINT pac_ssa_id_fk FOREIGN KEY (ssa_id) REFERENCES sist_salud(ssa_id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 1939 (class 2606 OID 16611)
+-- Dependencies: 1912 1553 1551
+-- Name: plantillas_agendas_det_pae_id_fk; Type: FK CONSTRAINT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE ONLY plantillas_agendas_det
+    ADD CONSTRAINT plantillas_agendas_det_pae_id_fk FOREIGN KEY (pae_id) REFERENCES plantillas_agendas_enc(pae_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- TOC entry 1940 (class 2606 OID 16616)
+-- Dependencies: 1554 1560 1924
+-- Name: prest_rf_id_fk; Type: FK CONSTRAINT; Schema: miniris; Owner: grp_ris
+--
+
+ALTER TABLE ONLY prestaciones
+    ADD CONSTRAINT prest_rf_id_fk FOREIGN KEY (rf_id) REFERENCES rrffs(rf_id) MATCH FULL ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+--
+-- TOC entry 1970 (class 0 OID 0)
+-- Dependencies: 7
+-- Name: miniris; Type: ACL; Schema: -; Owner: grp_ris
+--
+
+REVOKE ALL ON SCHEMA miniris FROM PUBLIC;
+REVOKE ALL ON SCHEMA miniris FROM grp_ris;
+GRANT ALL ON SCHEMA miniris TO grp_ris;
+GRANT USAGE ON SCHEMA miniris TO PUBLIC;
+
+
+--
+-- TOC entry 1972 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- TOC entry 1987 (class 0 OID 0)
+-- Dependencies: 1540
+-- Name: citaciones; Type: ACL; Schema: miniris; Owner: grp_ris
+--
+
+REVOKE ALL ON TABLE citaciones FROM PUBLIC;
+REVOKE ALL ON TABLE citaciones FROM grp_ris;
+GRANT ALL ON TABLE citaciones TO grp_ris;
+GRANT ALL ON TABLE citaciones TO PUBLIC;
+
+
+--
+-- TOC entry 1995 (class 0 OID 0)
+-- Dependencies: 1543
+-- Name: clases; Type: ACL; Schema: miniris; Owner: grp_ris
+--
+
+REVOKE ALL ON TABLE clases FROM PUBLIC;
+REVOKE ALL ON TABLE clases FROM grp_ris;
+GRANT ALL ON TABLE clases TO grp_ris;
+GRANT ALL ON TABLE clases TO PUBLIC;
+
+
+--
+-- TOC entry 2001 (class 0 OID 0)
+-- Dependencies: 1544
+-- Name: derivadores; Type: ACL; Schema: miniris; Owner: grp_ris
+--
+
+REVOKE ALL ON TABLE derivadores FROM PUBLIC;
+REVOKE ALL ON TABLE derivadores FROM grp_ris;
+GRANT ALL ON TABLE derivadores TO grp_ris;
+GRANT ALL ON TABLE derivadores TO PUBLIC;
+
+
+--
+-- TOC entry 2029 (class 0 OID 0)
+-- Dependencies: 1548
+-- Name: pacientes; Type: ACL; Schema: miniris; Owner: grp_ris
+--
+
+REVOKE ALL ON TABLE pacientes FROM PUBLIC;
+REVOKE ALL ON TABLE pacientes FROM grp_ris;
+GRANT ALL ON TABLE pacientes TO grp_ris;
+GRANT ALL ON TABLE pacientes TO PUBLIC;
+
+
+--
+-- TOC entry 2038 (class 0 OID 0)
+-- Dependencies: 1550
+-- Name: parametros; Type: ACL; Schema: miniris; Owner: grp_ris
+--
+
+REVOKE ALL ON TABLE parametros FROM PUBLIC;
+REVOKE ALL ON TABLE parametros FROM grp_ris;
+GRANT ALL ON TABLE parametros TO grp_ris;
+GRANT ALL ON TABLE parametros TO PUBLIC;
+
+
+--
+-- TOC entry 2063 (class 0 OID 0)
+-- Dependencies: 1554
+-- Name: prestaciones; Type: ACL; Schema: miniris; Owner: grp_ris
+--
+
+REVOKE ALL ON TABLE prestaciones FROM PUBLIC;
+REVOKE ALL ON TABLE prestaciones FROM grp_ris;
+GRANT ALL ON TABLE prestaciones TO grp_ris;
+GRANT ALL ON TABLE prestaciones TO PUBLIC;
+
+
+--
+-- TOC entry 2071 (class 0 OID 0)
+-- Dependencies: 1555
+-- Name: prestsol_det; Type: ACL; Schema: miniris; Owner: grp_ris
+--
+
+REVOKE ALL ON TABLE prestsol_det FROM PUBLIC;
+REVOKE ALL ON TABLE prestsol_det FROM grp_ris;
+GRANT ALL ON TABLE prestsol_det TO grp_ris;
+GRANT ALL ON TABLE prestsol_det TO PUBLIC;
+
+
+--
+-- TOC entry 2092 (class 0 OID 0)
+-- Dependencies: 1556
+-- Name: prestsol_enc; Type: ACL; Schema: miniris; Owner: grp_ris
+--
+
+REVOKE ALL ON TABLE prestsol_enc FROM PUBLIC;
+REVOKE ALL ON TABLE prestsol_enc FROM grp_ris;
+GRANT ALL ON TABLE prestsol_enc TO grp_ris;
+GRANT ALL ON TABLE prestsol_enc TO PUBLIC;
+
+
+--
+-- TOC entry 2098 (class 0 OID 0)
+-- Dependencies: 1557
+-- Name: profesiones; Type: ACL; Schema: miniris; Owner: grp_ris
+--
+
+REVOKE ALL ON TABLE profesiones FROM PUBLIC;
+REVOKE ALL ON TABLE profesiones FROM grp_ris;
+GRANT ALL ON TABLE profesiones TO grp_ris;
+GRANT ALL ON TABLE profesiones TO PUBLIC;
+
+
+--
+-- TOC entry 2107 (class 0 OID 0)
+-- Dependencies: 1560
+-- Name: rrffs; Type: ACL; Schema: miniris; Owner: grp_ris
+--
+
+REVOKE ALL ON TABLE rrffs FROM PUBLIC;
+REVOKE ALL ON TABLE rrffs FROM grp_ris;
+GRANT ALL ON TABLE rrffs TO grp_ris;
+GRANT ALL ON TABLE rrffs TO PUBLIC;
+
+
+--
+-- TOC entry 2111 (class 0 OID 0)
+-- Dependencies: 1561
+-- Name: salas_old; Type: ACL; Schema: miniris; Owner: grp_ris
+--
+
+REVOKE ALL ON TABLE salas_old FROM PUBLIC;
+REVOKE ALL ON TABLE salas_old FROM grp_ris;
+GRANT ALL ON TABLE salas_old TO grp_ris;
+GRANT ALL ON TABLE salas_old TO PUBLIC;
+
+
+--
+-- TOC entry 2118 (class 0 OID 0)
+-- Dependencies: 1563
+-- Name: sist_salud; Type: ACL; Schema: miniris; Owner: grp_ris
+--
+
+REVOKE ALL ON TABLE sist_salud FROM PUBLIC;
+REVOKE ALL ON TABLE sist_salud FROM grp_ris;
+GRANT ALL ON TABLE sist_salud TO grp_ris;
+GRANT ALL ON TABLE sist_salud TO PUBLIC;
+
+
+--
+-- TOC entry 2129 (class 0 OID 0)
+-- Dependencies: 1565
+-- Name: user_access; Type: ACL; Schema: miniris; Owner: grp_ris
+--
+
+REVOKE ALL ON TABLE user_access FROM PUBLIC;
+REVOKE ALL ON TABLE user_access FROM grp_ris;
+GRANT ALL ON TABLE user_access TO grp_ris;
+GRANT ALL ON TABLE user_access TO PUBLIC;
+
+
+--
+-- TOC entry 2141 (class 0 OID 0)
+-- Dependencies: 1566
+-- Name: usuarios; Type: ACL; Schema: miniris; Owner: grp_ris
+--
+
+REVOKE ALL ON TABLE usuarios FROM PUBLIC;
+REVOKE ALL ON TABLE usuarios FROM grp_ris;
+GRANT ALL ON TABLE usuarios TO grp_ris;
+GRANT ALL ON TABLE usuarios TO PUBLIC;
+
+
+-- Completed on 2011-12-01 00:08:52 CLST
+
+--
+-- PostgreSQL database dump complete
+--
+
